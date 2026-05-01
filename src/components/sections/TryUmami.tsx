@@ -11,11 +11,32 @@ export default function TryUmami() {
   const [email, setEmail] = useState("");
   const [restaurant, setRestaurant] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  function submit(e: React.FormEvent) {
+  async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (!email.trim()) return;
-    setSubmitted(true);
+    if (!email.trim() || sending) return;
+    setSending(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, restaurant, kind: "trial" }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Failed to send");
+      }
+      setSubmitted(true);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Something went wrong. Try again?",
+      );
+    } finally {
+      setSending(false);
+    }
   }
 
   return (
@@ -89,8 +110,11 @@ export default function TryUmami() {
                       className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-brand/40 placeholder:text-muted"
                     />
                     <Button type="submit" className="w-full">
-                      Get my free trial →
+                      {sending ? "Sending…" : "Get my free trial →"}
                     </Button>
+                    {error && (
+                      <div className="text-xs text-red-400">{error}</div>
+                    )}
                   </form>
                 ) : (
                   <motion.div

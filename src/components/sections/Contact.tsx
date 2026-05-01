@@ -36,11 +36,32 @@ export default function Contact() {
   const [email, setEmail] = useState("");
   const [msg, setMsg] = useState("");
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  function submit(e: React.FormEvent) {
+  async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (!email.trim() || !msg.trim()) return;
-    setSent(true);
+    if (!email.trim() || !msg.trim() || sending) return;
+    setSending(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, message: msg, kind: "contact" }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Failed to send");
+      }
+      setSent(true);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Something went wrong. Try again?",
+      );
+    } finally {
+      setSending(false);
+    }
   }
 
   return (
@@ -125,8 +146,11 @@ export default function Contact() {
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-brand/40 placeholder:text-muted resize-none"
                   />
                   <Button type="submit" className="w-full">
-                    Send →
+                    {sending ? "Sending…" : "Send →"}
                   </Button>
+                  {error && (
+                    <div className="text-xs text-red-400 mt-1">{error}</div>
+                  )}
                 </form>
               ) : (
                 <motion.div
