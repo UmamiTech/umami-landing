@@ -18,23 +18,16 @@ const channels = [
   {
     label: "WhatsApp",
     desc: "Quickest way to reach us.",
-    value: "+63 917 000 0000",
-    href: "https://wa.me/639170000000",
+    value: "+63 917 576 2744",
+    href: "https://wa.me/639175762744",
     icon: "💬",
   },
   {
     label: "Email",
     desc: "For longer conversations or proposals.",
-    value: "hello@umami.com.ph",
-    href: "mailto:hello@umami.com.ph",
+    value: "umamitechnologies@gmail.com",
+    href: "mailto:umamitechnologies@gmail.com",
     icon: "✉️",
-  },
-  {
-    label: "Telegram",
-    desc: "Operational alerts and bot integrations.",
-    value: "@KaraOracleBot",
-    href: "https://t.me/KaraOracleBot",
-    icon: "📨",
   },
 ];
 
