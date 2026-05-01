@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2400 800">
+  <path d="M220 140 L220 400 Q220 560 400 560 Q580 560 580 400 L580 140" fill="none" stroke="#e87a1e" stroke-width="58" stroke-linecap="round"/>
+  <path d="M260 660 L260 400 Q260 240 440 240 Q620 240 620 400 L620 660" fill="none" stroke="#ffffff" stroke-width="58" stroke-linecap="round"/>
+  <text x="800" y="555" font-family="Inter, system-ui, -apple-system, sans-serif" font-weight="800" font-size="440" fill="#e87a1e" letter-spacing="-12">umami</text>
+</svg>
