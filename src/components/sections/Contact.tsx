@@ -11,8 +11,8 @@ const channels = [
   {
     label: "Book a demo",
     desc: "30 minutes. Show you everything. No pitch.",
-    value: "cal.com/umami/demo",
-    href: "https://cal.com/umami/demo",
+    value: "cal.com/umamitech",
+    href: "https://cal.com/umamitech",
     icon: "📅",
   },
   {
