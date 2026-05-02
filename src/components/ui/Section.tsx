@@ -26,7 +26,7 @@ export default function Section({
             </div>
           )}
           {title && (
-            <h2 className="text-balance text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight gradient-text">
+            <h2 className="text-balance text-4xl md:text-5xl lg:text-6xl tracking-tight gradient-text">
               {title}
             </h2>
           )}

@@ -35,14 +35,14 @@ export default function Nav() {
       )}
     >
       <Container className="flex h-16 items-center justify-between">
-        <a href="#" className="flex items-center gap-2.5">
+        <a href="#" className="flex items-center gap-3">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/logos/umami-icon.svg"
             alt="Umami"
-            className="h-7 w-7"
+            className="h-10 w-10"
           />
-          <span className="font-semibold tracking-tight text-base text-brand">
+          <span className="font-semibold tracking-tight text-2xl text-brand">
             umami
           </span>
         </a>

@@ -214,7 +214,7 @@ export default function OwnerDemo() {
                             <motion.div
                               key={item.price}
                               initial={{ scale: 1.1, color: "#e87a1e" }}
-                              animate={{ scale: 1, color: "" }}
+                              animate={{ scale: 1, color: "#a1a1aa" }}
                               transition={{ duration: 0.5 }}
                               className="text-xs font-mono text-muted"
                             >
@@ -393,7 +393,7 @@ export default function OwnerDemo() {
                               <motion.div
                                 key={item.price}
                                 initial={{ color: "#e87a1e" }}
-                                animate={{ color: "" }}
+                                animate={{ color: "#a1a1aa" }}
                                 transition={{ duration: 0.6 }}
                                 className="text-[10px] font-mono text-muted"
                               >

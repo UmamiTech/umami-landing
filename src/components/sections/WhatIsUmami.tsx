@@ -303,8 +303,10 @@ function OwnerCard() {
   const max = Math.max(...points);
   const path = points
     .map((p, i) => {
-      const x = (i / (points.length - 1)) * 100;
-      const y = 100 - (p / max) * 90;
+      // Round to 3 decimal places — keeps the curve smooth while making
+      // SSR and CSR produce byte-identical path strings (avoids hydration mismatch)
+      const x = ((i / (points.length - 1)) * 100).toFixed(3);
+      const y = (100 - (p / max) * 90).toFixed(3);
       return `${i === 0 ? "M" : "L"} ${x} ${y}`;
     })
     .join(" ");
@@ -394,8 +396,8 @@ function Kpi({
       </div>
       <motion.div
         key={value}
-        initial={{ scale: highlight ? 1.05 : 1, color: highlight ? "#a78bfa" : "" }}
-        animate={{ scale: 1, color: "" }}
+        initial={{ scale: highlight ? 1.05 : 1, color: highlight ? "#a78bfa" : "#f5f5f7" }}
+        animate={{ scale: 1, color: "#f5f5f7" }}
         transition={{ duration: 0.5 }}
         className={cn(
           "text-sm font-semibold tabular-nums",
@@ -474,7 +476,7 @@ function ChainCard() {
               <motion.span
                 key={b.revenue}
                 initial={{ color: "#7dd3fc" }}
-                animate={{ color: "" }}
+                animate={{ color: "rgba(245, 245, 247, 0.8)" }}
                 transition={{ duration: 0.6 }}
                 className="text-[10px] font-mono tabular-nums text-foreground/80"
               >

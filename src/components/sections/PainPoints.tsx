@@ -88,7 +88,7 @@ function PainRow({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6 }}
-      className="grid md:grid-cols-2 gap-2 md:gap-6 rounded-2xl border border-white/10 bg-card overflow-hidden"
+      className="relative grid md:grid-cols-2 gap-2 md:gap-6 rounded-2xl border border-white/10 bg-card overflow-hidden"
     >
       <div className="relative p-7 md:p-9 border-b md:border-b-0 md:border-r border-white/5">
         <div className="absolute top-6 left-7 text-xs font-mono text-red-400/70 uppercase tracking-widest flex items-center gap-2">

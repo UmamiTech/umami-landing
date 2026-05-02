@@ -19,9 +19,10 @@
   --color-border: var(--border);
   --color-card: var(--card);
   --color-brand: var(--brand);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-display: var(--font-geist-sans);
+  /* Body sans = Inter Tight. Display serif = Fraunces. Mono = JetBrains Mono. */
+  --font-sans: var(--font-inter-tight), -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-display: var(--font-fraunces), "Fraunces", ui-serif, Georgia, serif;
 }
 
 * {
@@ -36,10 +37,19 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-inter-tight), -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+}
+
+/* Display headlines use Fraunces — variable serif with character.
+   Weight 500 reads strong without feeling shouty. */
+h1, h2 {
+  font-family: var(--font-fraunces), "Fraunces", ui-serif, Georgia, serif;
+  font-weight: 500;
+  letter-spacing: -0.02em;
 }
 
 ::selection {
@@ -48,7 +58,7 @@ body {
 }
 
 .font-mono {
-  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+  font-family: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 }
 
 /* Animated grid background */
@@ -129,11 +139,15 @@ body {
   color: transparent;
 }
 
+/* Brand-text spans get an italic tilt — Fraunces' italic is gorgeous and
+   gives the headline rhythm a chef's-handwritten-note feel. */
 .brand-text {
   background: linear-gradient(135deg, #ffb066 0%, #e87a1e 50%, #c25510 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  font-style: italic;
+  font-weight: 400;
 }
 
 /* Phone & laptop frame */

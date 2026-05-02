@@ -94,7 +94,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.05 }}
-              className="text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.02]"
+              className="text-5xl md:text-6xl lg:text-7xl tracking-tight leading-[1.02]"
             >
               <span className="gradient-text">Your restaurant.</span>
               <br />
