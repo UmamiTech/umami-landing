@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/store/:slug",
+      "destination": "https://app.umami.com.ph/store/:slug"
+    },
+    {
+      "source": "/sitemap-stores.xml",
+      "destination": "https://app.umami.com.ph/sitemap-stores.xml"
+    }
+  ]
+}
