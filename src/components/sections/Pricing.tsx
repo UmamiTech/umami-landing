@@ -9,27 +9,35 @@ import Button from "../ui/Button";
 import { cn, peso } from "@/lib/utils";
 
 /**
- * Paid tiers are hidden until billing is actually wired up — there is no
- * payment provider connected, and the app hides every paid module behind its
- * free-tier gate, so selling Growth/Pro/Chain today would take money we can't
- * charge for features the account wouldn't show. The tier definitions are kept
- * intact on purpose: flip this to `true` to put them all back.
+ * Only Starter can be bought today — there is no payment provider connected, so
+ * the others are shown as roadmap, not as an offer.
+ *
+ * Starter's feature list is the app's free-tier module gate
+ * (`FREE_TIER_MODULES` in the Umami repo), and nothing else. No count is
+ * limited anywhere in the app — `resolveEntitlements` returns unlimited for
+ * menu items, tables and staff — so do NOT reintroduce a "(up to N)" claim
+ * here without a limit actually being enforced. Everything listed under a
+ * coming-soon tier is a module that gate genuinely hides today; when one
+ * launches, it moves list AND gets added to FREE_TIER_MODULES or stays paid.
  */
-const SHOW_PAID_TIERS = false;
-
 const tiers = [
   {
     name: "Starter",
     tag: "Get online today",
     price: 0,
     suffix: "/mo",
-    desc: "For single cafés, food carts, small eateries (1–10 tables).",
+    desc: "Everything a single restaurant needs to take orders. No limits on tables, menu items or staff.",
     features: [
       "Customer QR ordering",
-      "Digital menu (up to 50 items)",
-      "1 staff dashboard",
-      "Basic reports",
-      "Cloud-only",
+      "Unlimited menu items & categories",
+      "Unlimited tables & QR codes",
+      "Kitchen, Dining, Cashier & Order Specialist screens",
+      "Owner dashboard with live sales reports",
+      "Add-ons, allergens & dietary tags",
+      "Charges & discounts",
+      "Unlimited staff accounts with custom roles",
+      "AI menu scan",
+      "Order log & audit trail",
       "Email support",
     ],
     cta: "Start free",
@@ -37,22 +45,22 @@ const tiers = [
   },
   {
     name: "Growth",
-    tag: "Run your restaurant",
+    tag: "Fill more tables",
     price: 1499,
     suffix: "/mo per branch",
-    desc: "For mid-size restaurants (10–30 tables, full-service).",
+    desc: "For restaurants that want the front of house working harder.",
     features: [
       "Everything in Starter",
-      "Unlimited menu items",
-      "All 4 staff dashboards",
-      "Vouchers & discounts",
-      "AI menu scan",
-      "6 languages",
-      "Full analytics",
+      "Vouchers & promo codes",
+      "Waitlist & table reservations",
+      "Takeaway and pickup ordering",
+      "Public store page (Google-ready)",
+      "Customer feedback & reviews",
+      "Staff and product performance analytics",
       "Priority support",
     ],
-    cta: "Get Growth",
-    href: "#try",
+    comingSoon: true,
+    href: "#contact",
   },
   {
     name: "Pro",
@@ -63,15 +71,15 @@ const tiers = [
     features: [
       "Everything in Growth",
       "Offline-first laptop deployment",
-      "Pax-based pricing (buffet)",
-      "Bill splitting",
-      "Custom roles",
-      "Table linking",
+      "Keeps taking orders with the internet down",
+      "Finance & BIR books with daily close",
+      "Staff scheduling & clock in/out",
+      "AI chat assistant for customers",
       "WhatsApp / SMS alerts",
     ],
-    cta: "Get Pro",
     highlight: true,
-    href: "#try",
+    comingSoon: true,
+    href: "#contact",
   },
   {
     name: "Chain",
@@ -89,24 +97,22 @@ const tiers = [
       "Dedicated account manager",
       "Custom integrations",
     ],
-    cta: "Get Chain",
+    comingSoon: true,
     href: "#contact",
   },
 ];
 
 export default function Pricing() {
   const [annual, setAnnual] = useState(false);
-  const visibleTiers = SHOW_PAID_TIERS ? tiers : tiers.filter((t) => t.price === 0);
 
   return (
     <Section
       id="pricing"
       eyebrow="Pricing"
-      title={<>Start free.<br /><span className="brand-text">Keep it free.</span></>}
-      subtitle="No transaction fees. Ever. No credit card to start."
+      title={<>Start free.<br /><span className="brand-text">Scale when you grow.</span></>}
+      subtitle="Starter is live today and free forever. The paid plans are on the way — talk to us if you want them early."
     >
       <Container>
-        {SHOW_PAID_TIERS && (
         <Reveal>
           <div className="flex justify-center mb-12">
             <div className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-card p-1">
@@ -139,32 +145,30 @@ export default function Pricing() {
             </div>
           </div>
         </Reveal>
-        )}
 
-        <div
-          className={cn(
-            "gap-5",
-            visibleTiers.length > 1
-              ? "grid md:grid-cols-2 lg:grid-cols-4"
-              : "max-w-sm mx-auto",
-          )}
-        >
-          {visibleTiers.map((tier, i) => (
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+          {tiers.map((tier, i) => (
             <Reveal key={tier.name} delay={i * 0.07}>
               <motion.div
                 whileHover={{ y: -6 }}
                 transition={{ duration: 0.3 }}
                 className={cn(
                   "relative h-full rounded-2xl border p-6 flex flex-col",
-                  tier.highlight
+                  tier.highlight && !tier.comingSoon
                     ? "border-brand/50 bg-gradient-to-b from-brand/[0.08] to-transparent shadow-[0_0_60px_-20px_var(--brand-glow)]"
                     : "border-white/10 bg-card",
                 )}
               >
-                {tier.highlight && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-brand text-black text-[10px] font-bold uppercase tracking-widest font-mono">
-                    Most popular
+                {tier.comingSoon ? (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full border border-white/15 bg-card text-muted text-[10px] font-bold uppercase tracking-widest font-mono">
+                    Coming soon
                   </div>
+                ) : (
+                  tier.highlight && (
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-brand text-black text-[10px] font-bold uppercase tracking-widest font-mono">
+                      Most popular
+                    </div>
+                  )
                 )}
                 <div className="mb-4">
                   <div className="text-xs uppercase tracking-widest text-brand font-mono mb-1.5">
@@ -200,10 +204,16 @@ export default function Pricing() {
                   {tier.features.map((f) => (
                     <li
                       key={f}
-                      className="flex items-start gap-2.5 text-sm text-foreground/85"
+                      className={cn(
+                        "flex items-start gap-2.5 text-sm",
+                        tier.comingSoon ? "text-foreground/55" : "text-foreground/85",
+                      )}
                     >
                       <svg
-                        className="size-4 text-brand mt-0.5 shrink-0"
+                        className={cn(
+                          "size-4 mt-0.5 shrink-0",
+                          tier.comingSoon ? "text-muted" : "text-brand",
+                        )}
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
@@ -220,13 +230,25 @@ export default function Pricing() {
                   ))}
                 </ul>
 
-                <Button
-                  href={tier.href}
-                  variant={tier.highlight ? "primary" : "secondary"}
-                  className="w-full"
-                >
-                  {tier.cta}
-                </Button>
+                {tier.comingSoon ? (
+                  /* Not a link and not disabled-looking-but-clickable: there is
+                     nothing to buy yet, so the only real action is to tell us
+                     you want it. */
+                  <a
+                    href="#contact"
+                    className="inline-flex w-full items-center justify-center rounded-full border border-white/10 px-5 py-2.5 text-sm font-medium text-muted transition-colors hover:text-foreground hover:border-white/20"
+                  >
+                    Coming soon — get on the list
+                  </a>
+                ) : (
+                  <Button
+                    href={tier.href}
+                    variant={tier.highlight ? "primary" : "secondary"}
+                    className="w-full"
+                  >
+                    {tier.cta}
+                  </Button>
+                )}
               </motion.div>
             </Reveal>
           ))}
@@ -242,7 +264,7 @@ export default function Pricing() {
             </h3>
             <p className="text-sm text-muted mb-5 max-w-2xl mx-auto">
               Custom infra, SLA, dedicated dev, on-site training, white-label,
-              API access.{SHOW_PAID_TIERS ? " Starting at ₱30,000/mo." : " Let's talk about what you need."}
+              API access. Starting at ₱30,000/mo.
             </p>
             <Button href="#contact">Talk to sales</Button>
           </div>
