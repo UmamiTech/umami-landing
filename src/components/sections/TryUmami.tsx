@@ -6,10 +6,14 @@ import Container from "../ui/Container";
 import Section from "../ui/Section";
 import Reveal from "../ui/Reveal";
 import Button from "../ui/Button";
+import FoodCheck, { type FoodCheckValue } from "../ui/FoodCheck";
+import { APP_URL } from "@/lib/app";
 
 export default function TryUmami() {
   const [email, setEmail] = useState("");
   const [restaurant, setRestaurant] = useState("");
+  const [check, setCheck] = useState<FoodCheckValue | null>(null);
+  const [checkKey, setCheckKey] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -17,23 +21,53 @@ export default function TryUmami() {
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!email.trim() || sending) return;
+
+    if (!check?.challengeId || check.selected.length === 0) {
+      setError("Tap the matching food below so we know you're human.");
+      return;
+    }
+
     setSending(true);
     setError(null);
     try {
-      const res = await fetch("/api/contact", {
+      // This creates the restaurant and emails the owner their login. It is the
+      // app's endpoint, not ours — this site holds no accounts. A failure here
+      // means no account was created, so it must surface, never be swallowed.
+      const res = await fetch(`${APP_URL}/api/auth/free-trial`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          restaurantName: restaurant,
+          captchaId: check.challengeId,
+          captchaSelected: check.selected,
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        // The app already words these for the visitor ("that email has an
+        // account, sign in at…"), so show its message rather than our own.
+        throw new Error(
+          data.error ||
+            "We couldn't set that up. Try again, or email umamitechnologies@gmail.com and we'll do it for you.",
+        );
+      }
+
+      setSubmitted(true);
+
+      // Tell ourselves a trial started. Best-effort on purpose: the visitor
+      // already has their account, so our own lead notification failing must
+      // not show them an error.
+      fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, restaurant, kind: "trial" }),
-      });
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data.error || "Failed to send");
-      }
-      setSubmitted(true);
+      }).catch(() => {});
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Something went wrong. Try again?",
       );
+      setCheckKey((k) => k + 1); // challenges are single-use
     } finally {
       setSending(false);
     }
@@ -88,15 +122,15 @@ export default function TryUmami() {
                   Start your own free trial
                 </h3>
                 <p className="text-sm text-muted mb-7 max-w-sm">
-                  We&rsquo;ll create your restaurant, send you a login, and walk
-                  you through it. 14 days, no credit card.
+                  We create your restaurant and email you an owner login. Free
+                  tier, no credit card, no sales call.
                 </p>
 
                 {!submitted ? (
                   <form onSubmit={submit} className="space-y-3 max-w-sm">
                     <input
                       type="text"
-                      placeholder="Restaurant name"
+                      placeholder="Restaurant name (optional)"
                       value={restaurant}
                       onChange={(e) => setRestaurant(e.target.value)}
                       className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-brand/40 placeholder:text-muted"
@@ -109,8 +143,9 @@ export default function TryUmami() {
                       required
                       className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-brand/40 placeholder:text-muted"
                     />
+                    <FoodCheck onChange={setCheck} refreshKey={checkKey} />
                     <Button type="submit" className="w-full">
-                      {sending ? "Sending…" : "Get my free trial →"}
+                      {sending ? "Creating your restaurant…" : "Get my free trial →"}
                     </Button>
                     {error && (
                       <div className="text-xs text-red-400">{error}</div>
@@ -128,10 +163,22 @@ export default function TryUmami() {
                         On its way
                       </span>
                     </div>
+                    {/* The explicit {" "} on BOTH sides is load-bearing: JSX
+                        strips the leading whitespace of a text node that wraps
+                        onto another line, which is what glued the address to
+                        the following word ("you@example.comin the next…"). */}
                     <p className="text-sm text-foreground/90">
-                      Check <strong>{email}</strong> in the next minute. We&rsquo;ll
-                      get back to you within 24 hours.
+                      Your restaurant is ready. We sent your owner login to{" "}
+                      <strong>{email}</strong>{" "}
+                      &mdash; it should land within a minute. Check spam if it
+                      doesn&rsquo;t.
                     </p>
+                    <a
+                      href={`${APP_URL}/login`}
+                      className="inline-block mt-3 text-xs font-mono text-brand hover:underline"
+                    >
+                      Go to sign in →
+                    </a>
                   </motion.div>
                 )}
 

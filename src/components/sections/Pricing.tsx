@@ -8,6 +8,15 @@ import Reveal from "../ui/Reveal";
 import Button from "../ui/Button";
 import { cn, peso } from "@/lib/utils";
 
+/**
+ * Paid tiers are hidden until billing is actually wired up — there is no
+ * payment provider connected, and the app hides every paid module behind its
+ * free-tier gate, so selling Growth/Pro/Chain today would take money we can't
+ * charge for features the account wouldn't show. The tier definitions are kept
+ * intact on purpose: flip this to `true` to put them all back.
+ */
+const SHOW_PAID_TIERS = false;
+
 const tiers = [
   {
     name: "Starter",
@@ -87,15 +96,17 @@ const tiers = [
 
 export default function Pricing() {
   const [annual, setAnnual] = useState(false);
+  const visibleTiers = SHOW_PAID_TIERS ? tiers : tiers.filter((t) => t.price === 0);
 
   return (
     <Section
       id="pricing"
       eyebrow="Pricing"
-      title={<>Start free.<br /><span className="brand-text">Scale when you grow.</span></>}
-      subtitle="No transaction fees. Ever. Cancel any time."
+      title={<>Start free.<br /><span className="brand-text">Keep it free.</span></>}
+      subtitle="No transaction fees. Ever. No credit card to start."
     >
       <Container>
+        {SHOW_PAID_TIERS && (
         <Reveal>
           <div className="flex justify-center mb-12">
             <div className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-card p-1">
@@ -128,9 +139,17 @@ export default function Pricing() {
             </div>
           </div>
         </Reveal>
+        )}
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-          {tiers.map((tier, i) => (
+        <div
+          className={cn(
+            "gap-5",
+            visibleTiers.length > 1
+              ? "grid md:grid-cols-2 lg:grid-cols-4"
+              : "max-w-sm mx-auto",
+          )}
+        >
+          {visibleTiers.map((tier, i) => (
             <Reveal key={tier.name} delay={i * 0.07}>
               <motion.div
                 whileHover={{ y: -6 }}
@@ -223,7 +242,7 @@ export default function Pricing() {
             </h3>
             <p className="text-sm text-muted mb-5 max-w-2xl mx-auto">
               Custom infra, SLA, dedicated dev, on-site training, white-label,
-              API access. Starting at ₱30,000/mo.
+              API access.{SHOW_PAID_TIERS ? " Starting at ₱30,000/mo." : " Let's talk about what you need."}
             </p>
             <Button href="#contact">Talk to sales</Button>
           </div>
