@@ -6,8 +6,9 @@ import Container from "../ui/Container";
 import Section from "../ui/Section";
 import Reveal from "../ui/Reveal";
 import Button from "../ui/Button";
+import { QRCodeSVG } from "qrcode.react";
 import FoodCheck, { type FoodCheckValue } from "../ui/FoodCheck";
-import { APP_URL } from "@/lib/app";
+import { APP_URL, DEMO_MENU_URL } from "@/lib/app";
 
 export default function TryUmami() {
   const [email, setEmail] = useState("");
@@ -98,14 +99,27 @@ export default function TryUmami() {
                   account to create.
                 </p>
 
-                <div className="bg-white p-5 rounded-2xl inline-block shadow-2xl">
-                  <QRCode value="https://app.umami.com.ph/menu/demo" />
-                </div>
+                {/* A real, scannable QR. This used to be a decorative grid of
+                    pseudo-random squares: it looked like a QR code and no phone
+                    could read it, so "scan and order on your real phone" was
+                    impossible from this page. */}
+                <a
+                  href={DEMO_MENU_URL}
+                  className="bg-white p-5 rounded-2xl inline-block shadow-2xl"
+                  aria-label="Open the demo menu"
+                >
+                  <QRCodeSVG value={DEMO_MENU_URL} size={196} level="M" />
+                </a>
 
                 <div className="mt-5 flex items-center gap-2 text-xs font-mono text-muted">
                   <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  app.umami.com.ph/menu/demo
+                  <a href={DEMO_MENU_URL} className="hover:text-foreground transition-colors">
+                    app.umami.com.ph/menu/demo
+                  </a>
                 </div>
+                <p className="mt-2 text-xs text-muted">
+                  On a laptop? Tap the code &mdash; it opens the same demo menu.
+                </p>
               </div>
             </div>
           </Reveal>
@@ -200,48 +214,3 @@ export default function TryUmami() {
   );
 }
 
-// Simple decorative QR code — visual only, not a real scannable code
-function QRCode({ value }: { value: string }) {
-  // Pseudo-random pattern based on string
-  const grid = 21;
-  const cells: boolean[] = [];
-  let seed = value.split("").reduce((s, c) => s + c.charCodeAt(0), 0);
-  for (let i = 0; i < grid * grid; i++) {
-    seed = (seed * 9301 + 49297) % 233280;
-    cells.push(seed / 233280 > 0.5);
-  }
-  // Force 3 corner finder patterns
-  function isFinder(r: number, c: number) {
-    const inTL = r < 7 && c < 7;
-    const inTR = r < 7 && c >= grid - 7;
-    const inBL = r >= grid - 7 && c < 7;
-    if (!(inTL || inTR || inBL)) return null;
-    const lr = inTL ? r : inTR ? r : r - (grid - 7);
-    const lc = inTL ? c : inTR ? c - (grid - 7) : c;
-    if (lr === 0 || lr === 6 || lc === 0 || lc === 6) return true;
-    if (lr >= 2 && lr <= 4 && lc >= 2 && lc <= 4) return true;
-    return false;
-  }
-
-  return (
-    <div
-      className="grid"
-      style={{ gridTemplateColumns: `repeat(${grid}, 1fr)`, width: 196, height: 196 }}
-    >
-      {cells.map((on, i) => {
-        const r = Math.floor(i / grid);
-        const c = i % grid;
-        const finder = isFinder(r, c);
-        const filled = finder !== null ? finder : on;
-        return (
-          <div
-            key={i}
-            style={{
-              backgroundColor: filled ? "#08080b" : "transparent",
-            }}
-          />
-        );
-      })}
-    </div>
-  );
-}

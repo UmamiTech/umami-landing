@@ -1,5 +1,13 @@
 import Container from "../ui/Container";
+import { APP_URL } from "@/lib/app";
 
+/**
+ * Every href here must resolve. This site has exactly two routes ("/" and the
+ * contact API), so any "/something" link is a 404 unless a page is added or a
+ * rewrite is configured — /investors, /privacy and /terms were all dead.
+ * Privacy now points at the real policy the app serves; Investors and Terms are
+ * gone until there is something to link to.
+ */
 const cols = [
   {
     title: "Product",
@@ -17,16 +25,15 @@ const cols = [
       { label: "Story", href: "#story" },
       { label: "Pricing", href: "#pricing" },
       { label: "Contact", href: "#contact" },
-      { label: "Investors", href: "/investors" },
     ],
   },
   {
     title: "Resources",
     links: [
-      { label: "Sign in", href: "https://app.umami.com.ph" },
-      { label: "Status", href: "https://app.umami.com.ph/health" },
-      { label: "Privacy", href: "/privacy" },
-      { label: "Terms", href: "/terms" },
+      { label: "Sign in", href: APP_URL },
+      { label: "Try the demo", href: `${APP_URL}/menu/demo` },
+      { label: "Start free", href: "#try" },
+      { label: "Privacy", href: `${APP_URL}/privacy` },
     ],
   },
 ];
