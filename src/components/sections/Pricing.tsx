@@ -10,23 +10,27 @@ import { cn, peso } from "@/lib/utils";
 import { APP_URL } from "@/lib/app";
 
 /**
- * Only Starter can be bought today. A payment provider IS now connected (Maya
- * card-on-file, in the app's Plan & Billing), but Growth/Pro/Chain are flagged
- * `comingSoon` in the app and its subscribe endpoint REFUSES them — so they are
- * shown here as roadmap, not as an offer. When one launches, its `comingSoon`
- * flag is cleared in the app and must be cleared here in the same change.
+ * Every tier on this page is a real offer as of 2026-08-11.
  *
- * Prices below are duplicated from the app's `default-plans.js`. The live
- * founding countdown is fetched (see useFoundingOffer) because it changes on
- * every signup; the rest is static and must be kept in step by hand.
+ * Starter and Growth and Pro are self-serve: the app charges a real card
+ * through Maya (Plan & Billing). Chain is sold but quoted by hand — its price
+ * depends on branch count and the app bills per restaurant today, so a
+ * self-serve checkout would undercharge a multi-branch operator. That is why it
+ * says "Talk to sales" and not "Coming soon": we will absolutely take a chain's
+ * money, we just want to price it correctly.
+ *
+ * MIRRORS the app's `default-plans.js`. A plan that is `contactSalesOnly` or
+ * `comingSoon` there must match here, and vice versa — the app's subscribe
+ * endpoint REFUSES both, so advertising one as buyable produces a dead end. The
+ * live founding countdown is fetched (see useFoundingOffer) because it changes
+ * on every signup; prices and feature bullets are static and kept in step by hand.
  *
  * Starter's feature list is the app's free-tier module gate
  * (`FREE_TIER_MODULES` in the Umami repo), and nothing else. No count is
  * limited anywhere in the app — `resolveEntitlements` returns unlimited for
  * menu items, tables and staff — so do NOT reintroduce a "(up to N)" claim
- * here without a limit actually being enforced. Everything listed under a
- * coming-soon tier is a module that gate genuinely hides today; when one
- * launches, it moves list AND gets added to FREE_TIER_MODULES or stays paid.
+ * here without a limit actually being enforced. Everything listed under a paid
+ * tier is a module that gate genuinely hides on the free tier.
  */
 const tiers = [
   {
@@ -67,8 +71,11 @@ const tiers = [
       "Staff and product performance analytics",
       "Priority support",
     ],
-    comingSoon: true,
-    href: "#contact",
+    // Live: the app charges a real card for this. Signing up is still the first
+    // step (every restaurant starts on Starter), so the CTA sends them to the
+    // trial form and they pick Growth in Plan & Billing.
+    cta: "Get started",
+    href: "#try",
   },
   {
     name: "Pro",
@@ -86,8 +93,8 @@ const tiers = [
       "WhatsApp / SMS alerts",
     ],
     highlight: true,
-    comingSoon: true,
-    href: "#contact",
+    cta: "Get started",
+    href: "#try",
   },
   {
     name: "Chain",
@@ -105,7 +112,11 @@ const tiers = [
       "Dedicated account manager",
       "Custom integrations",
     ],
-    comingSoon: true,
+    // Sold, but quoted by a human rather than self-serve: a chain's price
+    // depends on branch count, and the app bills per restaurant today, so a
+    // self-serve checkout would undercharge a multi-branch operator.
+    contactSales: true,
+    cta: "Talk to sales",
     href: "#contact",
   },
 ];
@@ -166,7 +177,7 @@ export default function Pricing() {
       id="pricing"
       eyebrow="Pricing"
       title={<>Start free.<br /><span className="brand-text">Scale when you grow.</span></>}
-      subtitle="Starter is live today and free forever for the first 100 restaurants. The paid plans are on the way — talk to us if you want them early."
+      subtitle="Starter is free forever for the first 100 restaurants. Start there and upgrade inside the app whenever you're ready — no call, no contract."
     >
       <Container>
         <Reveal>
@@ -210,16 +221,12 @@ export default function Pricing() {
                 transition={{ duration: 0.3 }}
                 className={cn(
                   "relative h-full rounded-2xl border p-6 flex flex-col",
-                  tier.highlight && !tier.comingSoon
+                  tier.highlight
                     ? "border-brand/50 bg-gradient-to-b from-brand/[0.08] to-transparent shadow-[0_0_60px_-20px_var(--brand-glow)]"
                     : "border-white/10 bg-card",
                 )}
               >
-                {tier.comingSoon ? (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full border border-white/15 bg-card text-muted text-[10px] font-bold uppercase tracking-widest font-mono">
-                    Coming soon
-                  </div>
-                ) : tier.price === 0 && founding?.open ? (
+                {tier.price === 0 && founding?.open ? (
                   /* The live countdown. Only rendered once the app has answered,
                      so the number on screen is always a real one. */
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-brand text-black text-[10px] font-bold uppercase tracking-widest font-mono whitespace-nowrap">
@@ -295,13 +302,13 @@ export default function Pricing() {
                       key={f}
                       className={cn(
                         "flex items-start gap-2.5 text-sm",
-                        tier.comingSoon ? "text-foreground/55" : "text-foreground/85",
+                        "text-foreground/85",
                       )}
                     >
                       <svg
                         className={cn(
                           "size-4 mt-0.5 shrink-0",
-                          tier.comingSoon ? "text-muted" : "text-brand",
+                          "text-brand",
                         )}
                         viewBox="0 0 24 24"
                         fill="none"
@@ -319,25 +326,13 @@ export default function Pricing() {
                   ))}
                 </ul>
 
-                {tier.comingSoon ? (
-                  /* Not a link and not disabled-looking-but-clickable: there is
-                     nothing to buy yet, so the only real action is to tell us
-                     you want it. */
-                  <a
-                    href="#contact"
-                    className="inline-flex w-full items-center justify-center rounded-full border border-white/10 px-5 py-2.5 text-sm font-medium text-muted transition-colors hover:text-foreground hover:border-white/20"
-                  >
-                    Coming soon — get on the list
-                  </a>
-                ) : (
-                  <Button
-                    href={tier.href}
-                    variant={tier.highlight ? "primary" : "secondary"}
-                    className="w-full"
-                  >
-                    {tier.cta}
-                  </Button>
-                )}
+                <Button
+                  href={tier.href}
+                  variant={tier.highlight ? "primary" : "secondary"}
+                  className="w-full"
+                >
+                  {tier.cta}
+                </Button>
               </motion.div>
             </Reveal>
           ))}
