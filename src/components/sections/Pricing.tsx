@@ -7,7 +7,7 @@ import Section from "../ui/Section";
 import Reveal from "../ui/Reveal";
 import Button from "../ui/Button";
 import { cn, peso } from "@/lib/utils";
-import { APP_URL } from "@/lib/app";
+import { APP_URL, PLAN_URL } from "@/lib/app";
 
 /**
  * Every tier on this page is a real offer as of 2026-08-11.
@@ -71,11 +71,11 @@ const tiers = [
       "Staff and product performance analytics",
       "Priority support",
     ],
-    // Live: the app charges a real card for this. Signing up is still the first
-    // step (every restaurant starts on Starter), so the CTA sends them to the
-    // trial form and they pick Growth in Plan & Billing.
-    cta: "Get started",
-    href: "#try",
+    // Live: the app charges a real card for this. Goes to the app's Plan &
+    // Billing, which is the only place the plan can actually be bought — the
+    // trial form would have quietly created a FREE Starter account instead.
+    cta: "Get Growth",
+    href: PLAN_URL,
   },
   {
     name: "Pro",
@@ -93,8 +93,8 @@ const tiers = [
       "WhatsApp / SMS alerts",
     ],
     highlight: true,
-    cta: "Get started",
-    href: "#try",
+    cta: "Get Pro",
+    href: PLAN_URL,
   },
   {
     name: "Chain",

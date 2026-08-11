@@ -15,3 +15,13 @@ export const APP_URL = "https://app.umami.com.ph";
  * ids would be frozen into every QR ever scanned from this page.
  */
 export const DEMO_MENU_URL = `${APP_URL}/menu/demo`;
+
+/**
+ * Where a paid pricing card sends the visitor. `/plan` resolves the signed-in
+ * owner's restaurant and opens Plan & Billing, which is the only place a plan
+ * can actually be bought; a signed-out visitor gets the login screen.
+ *
+ * Deliberately NOT the trial form: that creates a FREE Starter account, so
+ * "Get Pro" would have silently signed someone up to the wrong plan.
+ */
+export const PLAN_URL = `${APP_URL}/plan`;

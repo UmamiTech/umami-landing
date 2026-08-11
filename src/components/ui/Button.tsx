@@ -33,6 +33,18 @@ export default function Button({
   );
 
   if (href) {
+    // A same-page anchor ("#try") must be a plain <a>. next/link resolves a bare
+    // hash RELATIVE TO THE CURRENT URL, so once you are at "/#try" another click
+    // lands on "/#try#try", then "/#try#try#try" — the link appears to stop
+    // working. A plain anchor is what a hash link wants anyway: no routing, no
+    // prefetch, just scroll.
+    if (href.startsWith("#")) {
+      return (
+        <a href={href} className={cls}>
+          {children}
+        </a>
+      );
+    }
     return (
       <Link href={href} className={cls}>
         {children}
