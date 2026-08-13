@@ -61,6 +61,20 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <SmoothScroll />
         {children}
+        {/*
+          Support chat bubble. Deliberately a one-line include of a script SERVED BY
+          THE APP rather than a component in this repo: the widget and the endpoints
+          it talks to live together in UmamiTech/Umami, so they can never drift out
+          of step, and improving it never needs a redeploy here.
+
+          It self-mounts into a shadow root, so it cannot inherit or leak any of this
+          site's styling. If the app has no Telegram bridge configured, the script is
+          served as a harmless no-op instead of 404ing.
+
+          Plain <script> rather than next/script on purpose — no framework API, so
+          nothing here to break on a Next upgrade.
+        */}
+        <script async src="https://app.umami.com.ph/api/support/public/widget.js" />
       </body>
     </html>
   );
