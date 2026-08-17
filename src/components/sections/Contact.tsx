@@ -34,6 +34,7 @@ const channels = [
 export default function Contact() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [msg, setMsg] = useState("");
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
@@ -48,7 +49,7 @@ export default function Contact() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, message: msg, kind: "contact" }),
+        body: JSON.stringify({ name, email, phone, message: msg, kind: "contact" }),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
@@ -135,6 +136,17 @@ export default function Contact() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-brand/40 placeholder:text-muted"
+                  />
+                  {/* Optional — a phone number is often the faster way to answer
+                      a question, but demanding one costs enquiries. */}
+                  <input
+                    type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
+                    placeholder="Mobile number (optional)"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-brand/40 placeholder:text-muted"
                   />
                   <textarea
