@@ -1,4 +1,88 @@
 User-agent: *
 Allow: /
 
+# AI crawlers — blocked (owner decision, 2026-08-18).
+#
+# robots.txt is a REQUEST, not a control: a crawler that ignores it, or that lies
+# about its user agent, is unaffected. Vercel serves this site, so there is no
+# nginx layer here to enforce it the way app.umami.com.ph does — on this host the
+# list below is the whole of it.
+#
+# Googlebot and Bingbot are deliberately NOT listed: they are search crawlers, and
+# blocking them would remove this site from search entirely. Google-Extended is
+# Google's separate AI-training agent; blocking it does not affect search ranking.
+#
+# Note this includes the RETRIEVAL crawlers (OAI-SearchBot, ChatGPT-User,
+# PerplexityBot, Claude-SearchBot), which are what let a page be cited in an AI
+# answer. Remove those four lines to become citable again without allowing
+# training.
+
+# — Training —
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: claude-web
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: meta-externalagent
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+User-agent: omgili
+Disallow: /
+
+User-agent: Timpibot
+Disallow: /
+
+User-agent: AI2Bot
+Disallow: /
+
+# — Retrieval (answering a live question; blocking these costs AI citations) —
+User-agent: OAI-SearchBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: Claude-SearchBot
+Disallow: /
+
+User-agent: Claude-User
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: Perplexity-User
+Disallow: /
+
 Sitemap: https://umami.com.ph/sitemap-stores.xml
