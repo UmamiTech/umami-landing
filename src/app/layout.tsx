@@ -32,6 +32,11 @@ export const metadata: Metadata = {
   description:
     "Customer ordering, kitchen, dining, cashier, chains. Works without WiFi. Built in the Philippines for the world.",
   metadataBase: new URL("https://umami.com.ph"),
+  // Meta Business verification — proves Umami Technologies Inc. owns umami.com.ph.
+  // Keep it: Meta can re-check the domain, and removing this can un-verify it.
+  other: {
+    "facebook-domain-verification": "5ai92fwc5pdtoy6zwvhlx4a7a03pwe",
+  },
   openGraph: {
     title: "Umami — The operating system for restaurants",
     description:
