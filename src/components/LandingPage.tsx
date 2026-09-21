@@ -41,6 +41,8 @@ const RELATED = [
   { slug: "qr-ordering", label: "QR code ordering" },
   { slug: "works-with-your-pos", label: "Works with your POS" },
   { slug: "for-samgyupsal", label: "For unlimited samgyupsal" },
+  { slug: "for-cafes", label: "For cafés" },
+  { slug: "how-to-set-up-a-qr-menu", label: "Guide: set up a QR menu" },
   { slug: "multi-branch", label: "Multi-branch restaurants" },
   { slug: "pricing", label: "Pricing" },
   { slug: "free-trial", label: "Free trial" },

@@ -16,6 +16,7 @@ const cols = [
       { label: "QR code ordering", href: "/qr-ordering" },
       { label: "Works with your POS", href: "/works-with-your-pos" },
       { label: "For unlimited samgyupsal", href: "/for-samgyupsal" },
+      { label: "For cafés", href: "/for-cafes" },
       { label: "Multi-branch", href: "/multi-branch" },
     ],
   },
@@ -32,6 +33,7 @@ const cols = [
     links: [
       { label: "Sign in", href: APP_URL },
       { label: "Try the demo", href: `${APP_URL}/menu/demo` },
+      { label: "How to set up a QR menu", href: "/how-to-set-up-a-qr-menu" },
       { label: "Start free", href: "/free-trial" },
       { label: "Privacy", href: `${APP_URL}/privacy` },
     ],

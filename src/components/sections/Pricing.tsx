@@ -89,7 +89,6 @@ const tiers = [
       "Finance & BIR books with daily close",
       "Staff scheduling & clock in/out",
       "AI chat assistant for customers",
-      "WhatsApp / SMS alerts",
     ],
     highlight: true,
     cta: "Get Pro",

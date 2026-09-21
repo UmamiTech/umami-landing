@@ -18,7 +18,7 @@
 
 ## Who uses it
 
-Restaurants in Metro Manila, including Romantic Baboy (Ayala Malls The 30th, Light Mall) and Kalei Cafe Bar.
+Restaurants in Metro Manila, including Romantic Baboy (Ayala Malls The 30th, Light Mall).
 
 ## Price
 
@@ -29,5 +29,6 @@ Starter is free for the first 100 restaurants, then PHP 99/month. Growth PHP 1,4
 - Website: https://umami.com.ph
 - One-page summary: https://umami.com.ph/what-is-umami
 - Free trial: https://umami.com.ph/free-trial
+- Setup guide: https://umami.com.ph/how-to-set-up-a-qr-menu
 - Demo menu: https://app.umami.com.ph/menu/demo
 - Contact: umamitechnologies@gmail.com

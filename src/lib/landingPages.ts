@@ -99,7 +99,7 @@ export const LANDING_PAGES: Record<string, LandingPageContent> = {
       {
         heading: "Who uses it",
         body: [
-          "Restaurants in Metro Manila, including Romantic Baboy (Ayala Malls The 30th and Light Mall) and Kalei Cafe Bar. Built in the Philippines by a restaurant owner.",
+          "Restaurants in Metro Manila, including Romantic Baboy at Ayala Malls The 30th and Light Mall. Built in the Philippines by a restaurant owner.",
         ],
       },
       {
@@ -379,6 +379,150 @@ export const LANDING_PAGES: Record<string, LandingPageContent> = {
       },
     ],
     faqs: COMMON_FAQS,
+  },
+  "for-cafes": {
+    slug: "for-cafes",
+    title: "QR Menu and Table Ordering for Cafés | Umami",
+    description:
+      "A QR menu for cafés that takes the order too: sizes, milk and add-ons picked on the customer's phone, straight to the barista. Free for Philippine cafés.",
+    eyebrow: "For cafés",
+    h1: "A QR menu for your café that takes the order too.",
+    lede: "Customers scan, pick their drink exactly how they like it, and the order lands on the bar screen. No line at the counter, no shouted orders, no wrong milk.",
+    sections: [
+      {
+        heading: "Built for how café orders really look",
+        body: [
+          "A café order is rarely just \"one latte\". It is iced or hot, a size, oat or full cream, an extra shot, less sugar. Umami puts every one of those choices on the customer's screen, so the order reaches your barista complete and in writing.",
+        ],
+        bullets: [
+          "Sizes, milk, sweetness and extra shots as simple choices",
+          "Required choices pre-selected, so one tap adds the drink",
+          "Paid add-ons priced automatically",
+          "Photos that sell the pastry case",
+          "Notes for anything unusual",
+        ],
+      },
+      {
+        heading: "Shorter line, faster tables",
+        body: [
+          "Guests who can order from their seat don't queue. Your counter staff stop taking orders and start making them, and a second round of coffee is one tap away instead of a trip back to the counter.",
+        ],
+      },
+      {
+        heading: "Change the board in seconds",
+        body: [
+          "Out of croissants? Mark them sold out and customers stop ordering them straight away. New seasonal drink? Add it with a photo in a minute. Your menu stays right without reprinting a single card.",
+        ],
+      },
+      {
+        heading: "Ready for tourists and students",
+        body: [
+          "Menus show in English, Chinese, Japanese, Korean, Vietnamese and Thai. A customer who can't read English still orders exactly what they want.",
+        ],
+      },
+      {
+        heading: "Works with your POS",
+        body: [
+          "Keep your POS for receipts and BIR. Umami handles the ordering and sends it to the bar and kitchen screens.",
+        ],
+      },
+    ],
+    faqs: [
+      ...COMMON_FAQS,
+      {
+        q: "Can customers order ahead for pickup?",
+        a: "Yes, on the Growth plan: takeaway and pickup ordering gives your café its own online ordering page.",
+      },
+      {
+        q: "Can I run a happy-hour or breakfast-only item?",
+        a: "Yes. On the Growth plan you can set the days and hours a product is available, and it appears and disappears from the menu on its own.",
+      },
+    ],
+  },
+
+  "how-to-set-up-a-qr-menu": {
+    slug: "how-to-set-up-a-qr-menu",
+    title: "How to Set Up a QR Menu for Your Restaurant | Umami",
+    description:
+      "A step-by-step guide to setting up a QR code menu for a Philippine restaurant or café in one afternoon — menu, table QR codes, staff screens, going live.",
+    eyebrow: "Guide",
+    h1: "How to set up a QR menu for your restaurant.",
+    lede: "You can go from a printed menu to customers ordering from their phones in one afternoon. Here is the whole process, step by step.",
+    sections: [
+      {
+        heading: "Before you start: a QR menu vs. QR ordering",
+        body: [
+          "A basic QR menu is a PDF behind a code: customers can read it, but they still have to call a server to order, and every price change means a new PDF.",
+          "QR ordering goes further. The customer orders from the menu itself and the order goes straight to your kitchen. The menu is live, so changes appear instantly. This guide sets up QR ordering, which also gives you everything a plain QR menu does.",
+        ],
+      },
+      {
+        heading: "Step 1 — Create your account",
+        body: [
+          "Sign up with your email on the free trial page. Your restaurant is created and the login arrives in your inbox within minutes. No card is needed on the free Starter plan.",
+        ],
+      },
+      {
+        heading: "Step 2 — Add your menu",
+        body: [
+          "Type your categories and items in, or save time with AI menu scan: take a clear photo of your printed menu (or upload the PDF) and Umami turns it into a digital menu for you to review. Check every price before you save.",
+        ],
+        bullets: [
+          "Add a photo to your best sellers — pictures sell",
+          "Set up choices once (size, doneness, add-ons) and reuse them across items",
+          "Tag allergens and dietary options so customers know what is in each dish",
+        ],
+      },
+      {
+        heading: "Step 3 — Add your tables and print the QR codes",
+        body: [
+          "Add each table and Umami creates a unique QR code for it, so every order arrives with the right table number. Print them and put one on every table.",
+        ],
+        bullets: [
+          "Use table tents or stickers at eye level, not flat under the plates",
+          "Add a short line such as \"Scan to order — no app needed\"",
+          "Laminate or use a stand; sauce and water will find them",
+        ],
+      },
+      {
+        heading: "Step 4 — Set up your staff screens",
+        body: [
+          "Give each station a screen: kitchen, dining (for serving) and cashier. Any phone, tablet or computer with a browser works — use what you already own. Create an account for each staff member so you can see who did what.",
+        ],
+      },
+      {
+        heading: "Step 5 — Test it yourself",
+        body: [
+          "Sit at a table, scan the code with your own phone and place an order. Watch it arrive in the kitchen, mark it ready, serve it, and close the bill. Ten minutes of testing saves you an awkward first night.",
+        ],
+      },
+      {
+        heading: "Step 6 — Go live",
+        body: [
+          "Brief your team: orders will appear on their screens, and they still greet guests and help anyone who prefers to order the usual way. Keep your POS for receipts as you do today — QR ordering sits alongside it.",
+        ],
+      },
+      {
+        heading: "Common mistakes to avoid",
+        bullets: [
+          "Using one QR code for the whole restaurant — you lose the table number",
+          "Leaving sold-out items on the menu during a rush",
+          "Blurry or missing photos on your top sellers",
+          "Hiding the QR code where guests can't see it",
+        ],
+      },
+    ],
+    faqs: [
+      ...COMMON_FAQS,
+      {
+        q: "How long does it take to set up a QR menu?",
+        a: "Most restaurants finish in one afternoon. The menu takes the longest; AI menu scan cuts that down a lot.",
+      },
+      {
+        q: "Do I need special hardware?",
+        a: "No. Customers use their own phones, and your staff screens run in the browser on devices you already have.",
+      },
+    ],
   },
 };
 
