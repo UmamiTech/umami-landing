@@ -1,0 +1,33 @@
+# Umami
+
+> Umami is a digital ordering system for restaurants in the Philippines. It is not a POS and does not replace one: it takes the orders and runs the kitchen, dining and cashier screens, while the restaurant keeps its existing POS for receipts and BIR.
+
+## What it does
+
+- QR table ordering: customers scan a code on the table and order from their own phone. No app to download.
+- Kitchen, dining, cashier and order-taker screens that update in real time.
+- Owner dashboard with live sales; a chain dashboard for multi-branch groups.
+- AI menu scan: photograph a printed menu to create a digital one.
+- Menus in 6 languages: English, Chinese, Japanese, Korean, Vietnamese, Thai.
+- Vouchers, discounts, service charges, and pax pricing for unlimited / buffet restaurants.
+- Keeps taking orders when the internet drops (Pro plan).
+
+## What it is not
+
+- Not a POS, not a payment terminal, not a delivery app.
+
+## Who uses it
+
+Restaurants in Metro Manila, including Romantic Baboy (Ayala Malls The 30th, Light Mall) and Kalei Cafe Bar.
+
+## Price
+
+Starter is free for the first 100 restaurants, then PHP 99/month. Growth PHP 1,499/month per branch, Pro PHP 2,999/month per branch, Chain PHP 4,999/month for 3 branches.
+
+## Links
+
+- Website: https://umami.com.ph
+- One-page summary: https://umami.com.ph/what-is-umami
+- Free trial: https://umami.com.ph/free-trial
+- Demo menu: https://app.umami.com.ph/menu/demo
+- Contact: umamitechnologies@gmail.com

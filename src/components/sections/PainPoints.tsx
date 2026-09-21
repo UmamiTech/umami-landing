@@ -8,9 +8,9 @@ import Section from "../ui/Section";
 const pains = [
   {
     bad: "Internet dies. Orders die.",
-    good: "Offline-first. Keep ordering with zero WiFi.",
+    good: "Keep taking orders when the internet drops.",
     detail:
-      "Local laptop deployment means a power outage at the ISP doesn't take your night down.",
+      "An outage at your internet provider doesn't take your night down.",
   },
   {
     bad: "Menus change. Print shop again.",
@@ -26,7 +26,7 @@ const pains = [
   {
     bad: "Where's table 12's bill?",
     good: "Customer sees the running bill. So do you.",
-    detail: "Real-time sync from POS to phone to kitchen. No more guessing.",
+    detail: "Live from the customer's phone to the kitchen to the cashier. No more guessing.",
   },
   {
     bad: "Tourists can't read the menu.",

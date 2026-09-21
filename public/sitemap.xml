@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Marketing pages, maintained in this repo -->
+  <sitemap>
+    <loc>https://umami.com.ph/sitemap-pages.xml</loc>
+  </sitemap>
+  <!-- Published restaurant store pages, generated live by app.umami.com.ph
+       (rewritten onto this domain). New stores appear here automatically. -->
+  <sitemap>
+    <loc>https://umami.com.ph/sitemap-stores.xml</loc>
+  </sitemap>
+</sitemapindex>

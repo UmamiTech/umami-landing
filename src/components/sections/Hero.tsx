@@ -109,8 +109,8 @@ export default function Hero() {
               transition={{ duration: 0.7, delay: 0.15 }}
               className="mt-7 text-lg text-muted max-w-md"
             >
-              The operating system for restaurants — customer ordering, kitchen,
-              dining, cashier, chains. Works without WiFi.
+              A digital ordering system for restaurants — QR table ordering,
+              kitchen, dining and cashier screens. Works alongside your POS.
             </motion.p>
 
             <motion.div

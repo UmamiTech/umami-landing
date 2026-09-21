@@ -6,13 +6,12 @@ import Button from "./ui/Button";
 import { cn } from "@/lib/utils";
 
 const links = [
-  { href: "#what", label: "What" },
-  { href: "#pain", label: "Why" },
-  { href: "#story", label: "Story" },
-  { href: "#customer-demo", label: "Order" },
-  { href: "#owner-demo", label: "Manage" },
-  { href: "#pricing", label: "Pricing" },
-  { href: "#contact", label: "Contact" },
+  { href: "/what-is-umami", label: "What" },
+  { href: "/works-with-your-pos", label: "Keep your POS" },
+  { href: "/qr-ordering", label: "QR ordering" },
+  { href: "/multi-branch", label: "Chains" },
+  { href: "/pricing", label: "Pricing" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 export default function Nav() {
@@ -35,7 +34,7 @@ export default function Nav() {
       )}
     >
       <Container className="flex h-16 items-center justify-between">
-        <a href="#" className="flex items-center gap-3">
+        <a href="/" className="flex items-center gap-3">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/logos/umami-icon.svg"

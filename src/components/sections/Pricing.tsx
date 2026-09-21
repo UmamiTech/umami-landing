@@ -85,7 +85,6 @@ const tiers = [
     desc: "For high-volume restaurants in areas with bad internet.",
     features: [
       "Everything in Growth",
-      "Offline-first laptop deployment",
       "Keeps taking orders with the internet down",
       "Finance & BIR books with daily close",
       "Staff scheduling & clock in/out",

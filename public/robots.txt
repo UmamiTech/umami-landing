@@ -17,72 +17,99 @@ Allow: /
 # answer. Remove those four lines to become citable again without allowing
 # training.
 
+# EXCEPTION (owner decision, 2026-09-21): every AI agent below may read ONE file,
+# /llms.txt — a short, plain summary of what Umami is. It says what we want an AI
+# answer to repeat and nothing about how the system works. Every other path stays
+# blocked. "Allow" wins here because it is the longer, more specific match.
+
 # — Training —
 User-agent: GPTBot
+Allow: /llms.txt
 Disallow: /
 
 User-agent: ClaudeBot
+Allow: /llms.txt
 Disallow: /
 
 User-agent: anthropic-ai
+Allow: /llms.txt
 Disallow: /
 
 User-agent: claude-web
+Allow: /llms.txt
 Disallow: /
 
 User-agent: Google-Extended
+Allow: /llms.txt
 Disallow: /
 
 User-agent: Applebot-Extended
+Allow: /llms.txt
 Disallow: /
 
 User-agent: CCBot
+Allow: /llms.txt
 Disallow: /
 
 User-agent: Bytespider
+Allow: /llms.txt
 Disallow: /
 
 User-agent: meta-externalagent
+Allow: /llms.txt
 Disallow: /
 
 User-agent: FacebookBot
+Allow: /llms.txt
 Disallow: /
 
 User-agent: Amazonbot
+Allow: /llms.txt
 Disallow: /
 
 User-agent: cohere-ai
+Allow: /llms.txt
 Disallow: /
 
 User-agent: Diffbot
+Allow: /llms.txt
 Disallow: /
 
 User-agent: omgili
+Allow: /llms.txt
 Disallow: /
 
 User-agent: Timpibot
+Allow: /llms.txt
 Disallow: /
 
 User-agent: AI2Bot
+Allow: /llms.txt
 Disallow: /
 
 # — Retrieval (answering a live question; blocking these costs AI citations) —
 User-agent: OAI-SearchBot
+Allow: /llms.txt
 Disallow: /
 
 User-agent: ChatGPT-User
+Allow: /llms.txt
 Disallow: /
 
 User-agent: Claude-SearchBot
+Allow: /llms.txt
 Disallow: /
 
 User-agent: Claude-User
+Allow: /llms.txt
 Disallow: /
 
 User-agent: PerplexityBot
+Allow: /llms.txt
 Disallow: /
 
 User-agent: Perplexity-User
+Allow: /llms.txt
 Disallow: /
 
-Sitemap: https://umami.com.ph/sitemap-stores.xml
+Sitemap: https://umami.com.ph/sitemap.xml

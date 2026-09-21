@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Marketing pages. Add a <url> for every new page in src/lib/landingPages.ts.
+     Only list URLs that return 200 and are indexable. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://umami.com.ph/</loc><lastmod>2026-09-21</lastmod></url>
+  <url><loc>https://umami.com.ph/what-is-umami</loc><lastmod>2026-09-21</lastmod></url>
+  <url><loc>https://umami.com.ph/qr-ordering</loc><lastmod>2026-09-21</lastmod></url>
+  <url><loc>https://umami.com.ph/works-with-your-pos</loc><lastmod>2026-09-21</lastmod></url>
+  <url><loc>https://umami.com.ph/pricing</loc><lastmod>2026-09-21</lastmod></url>
+  <url><loc>https://umami.com.ph/for-samgyupsal</loc><lastmod>2026-09-21</lastmod></url>
+  <url><loc>https://umami.com.ph/multi-branch</loc><lastmod>2026-09-21</lastmod></url>
+  <url><loc>https://umami.com.ph/free-trial</loc><lastmod>2026-09-21</lastmod></url>
+</urlset>

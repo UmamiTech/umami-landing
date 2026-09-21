@@ -2,29 +2,29 @@ import Container from "../ui/Container";
 import { APP_URL } from "@/lib/app";
 
 /**
- * Every href here must resolve. This site has exactly two routes ("/" and the
- * contact API), so any "/something" link is a 404 unless a page is added or a
- * rewrite is configured — /investors, /privacy and /terms were all dead.
- * Privacy now points at the real policy the app serves; Investors and Terms are
- * gone until there is something to link to.
+ * Every href here must resolve. The routes that exist are "/", the keyword pages
+ * in src/lib/landingPages.ts, and the /store/* rewrite — anything else is a 404.
+ * Privacy points at the real policy the app serves; Investors and Terms stay out
+ * until there is something to link to. "#try" works on every page because each
+ * page renders the TryUmami section.
  */
 const cols = [
   {
     title: "Product",
     links: [
-      { label: "Customer ordering", href: "#what" },
-      { label: "Kitchen + Dining", href: "#what" },
-      { label: "Cashier", href: "#what" },
-      { label: "Owner Dashboard", href: "#what" },
-      { label: "Chain Operator", href: "#what" },
+      { label: "What is Umami", href: "/what-is-umami" },
+      { label: "QR code ordering", href: "/qr-ordering" },
+      { label: "Works with your POS", href: "/works-with-your-pos" },
+      { label: "For unlimited samgyupsal", href: "/for-samgyupsal" },
+      { label: "Multi-branch", href: "/multi-branch" },
     ],
   },
   {
     title: "Company",
     links: [
-      { label: "Story", href: "#story" },
-      { label: "Pricing", href: "#pricing" },
-      { label: "Contact", href: "#contact" },
+      { label: "Story", href: "/#story" },
+      { label: "Pricing", href: "/pricing" },
+      { label: "Contact", href: "/#contact" },
     ],
   },
   {
@@ -32,7 +32,7 @@ const cols = [
     links: [
       { label: "Sign in", href: APP_URL },
       { label: "Try the demo", href: `${APP_URL}/menu/demo` },
-      { label: "Start free", href: "#try" },
+      { label: "Start free", href: "/free-trial" },
       { label: "Privacy", href: `${APP_URL}/privacy` },
     ],
   },
@@ -44,7 +44,7 @@ export default function Footer() {
       <Container className="py-16">
         <div className="grid md:grid-cols-4 gap-10">
           <div>
-            <a href="#" className="flex items-center gap-2.5 mb-4">
+            <a href="/" className="flex items-center gap-2.5 mb-4">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/logos/umami-icon.svg"
@@ -56,7 +56,7 @@ export default function Footer() {
               </span>
             </a>
             <p className="text-sm text-muted max-w-xs">
-              The operating system for restaurants. Made in the Philippines.
+              Digital ordering for restaurants. Works with your POS. Made in the Philippines.
             </p>
           </div>
           {cols.map((col) => (

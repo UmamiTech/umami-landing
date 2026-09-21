@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Fraunces, Inter_Tight, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
+import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "@/lib/site";
 
 // Display: Fraunces — variable serif with character (weight 400–700, italic)
 const fraunces = Fraunces({
@@ -28,28 +29,27 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Umami — The operating system for restaurants",
-  description:
-    "Customer ordering, kitchen, dining, cashier, chains. Works without WiFi. Built in the Philippines for the world.",
-  metadataBase: new URL("https://umami.com.ph"),
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  metadataBase: new URL(SITE_URL),
+  alternates: { canonical: "/" },
   // Meta Business verification — proves Umami Technologies Inc. owns umami.com.ph.
   // Keep it: Meta can re-check the domain, and removing this can un-verify it.
   other: {
     "facebook-domain-verification": "5ai92fwc5pdtoy6zwvhlx4a7a03pwe",
   },
   openGraph: {
-    title: "Umami — The operating system for restaurants",
-    description:
-      "Customer ordering, kitchen, dining, cashier, chains. Works without WiFi.",
-    url: "https://umami.com.ph",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    url: SITE_URL,
     siteName: "Umami",
     type: "website",
+    locale: "en_PH",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Umami — The operating system for restaurants",
-    description:
-      "Customer ordering, kitchen, dining, cashier, chains. Works without WiFi.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
   },
 };
 

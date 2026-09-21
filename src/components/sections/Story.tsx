@@ -28,8 +28,8 @@ const beats = [
   },
   {
     year: "2025",
-    title: "Offline-first deployed",
-    body: "Restaurants can now run a full night without internet. Local laptop, cloud sync, zero downtime.",
+    title: "Built for bad internet",
+    body: "Restaurants can now run a full night without internet. Zero downtime.",
   },
   {
     year: "2026",

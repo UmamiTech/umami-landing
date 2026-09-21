@@ -10,10 +10,12 @@ import TryUmami from "@/components/sections/TryUmami";
 import Contact from "@/components/sections/Contact";
 import BrandMark from "@/components/sections/BrandMark";
 import Footer from "@/components/sections/Footer";
+import { SITE_JSON_LD, jsonLd } from "@/lib/site";
 
 export default function Home() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(SITE_JSON_LD)} />
       <Nav />
       <main className="relative">
         <Hero />
