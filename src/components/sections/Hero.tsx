@@ -6,6 +6,7 @@ import Container from "../ui/Container";
 import Button from "../ui/Button";
 import GradientBg from "../ui/GradientBg";
 import { peso } from "@/lib/utils";
+import type { Customer } from "@/lib/customers";
 
 const phoneItems = [
   { id: "p1", emoji: "☕", name: "Spanish Latte", price: 180 },
@@ -15,7 +16,16 @@ const phoneItems = [
 
 type CartItem = { id: string; name: string; emoji: string; price: number; qty: number };
 
-export default function Hero() {
+/**
+ * Brands already shown as fixed wordmarks. A live customer whose name starts with
+ * one of these is skipped, so a brand never appears twice.
+ */
+const FIXED_BRANDS = ["romantic baboy", "kalei"];
+
+export default function Hero({ customers = [] }: { customers?: Customer[] }) {
+  const liveCustomers = customers.filter(
+    (c) => !FIXED_BRANDS.some((b) => c.name.toLowerCase().startsWith(b)),
+  );
   const [cart, setCart] = useState<CartItem[]>([]);
   const [highlighted, setHighlighted] = useState<string | null>(null);
   const [tickets, setTickets] = useState<{ id: string; name: string; time: string }[]>([]);
@@ -147,7 +157,28 @@ export default function Hero() {
                   alt="Kalei Cafe Bar"
                   className="h-10 opacity-80 hover:opacity-100 transition-opacity"
                 />
-                <span className="font-mono text-xs text-brand">+ more</span>
+                {liveCustomers.map((c) => {
+                  const logo = (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={c.logoUrl}
+                      alt={c.name}
+                      title={c.name}
+                      loading="lazy"
+                      className="h-12 w-12 rounded-xl object-cover ring-1 ring-white/10 opacity-80 hover:opacity-100 transition-opacity"
+                    />
+                  );
+                  return c.storeUrl ? (
+                    <a key={c.name} href={c.storeUrl} aria-label={c.name}>
+                      {logo}
+                    </a>
+                  ) : (
+                    <span key={c.name}>{logo}</span>
+                  );
+                })}
+                {liveCustomers.length === 0 && (
+                  <span className="font-mono text-xs text-brand">+ more</span>
+                )}
               </div>
             </motion.div>
           </div>
