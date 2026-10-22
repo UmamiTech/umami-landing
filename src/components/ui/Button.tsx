@@ -1,14 +1,13 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-type Variant = "primary" | "secondary" | "ghost";
+type Variant = "primary" | "dark" | "secondary" | "ghost";
 
 const styles: Record<Variant, string> = {
-  primary:
-    "bg-brand text-black hover:bg-[#ffa050] shadow-[0_0_40px_-10px_var(--brand-glow)]",
-  secondary:
-    "bg-white/5 text-foreground hover:bg-white/10 border border-white/10",
-  ghost: "text-foreground hover:bg-white/5",
+  primary: "bg-brand text-foreground hover:bg-[#f08a32]",
+  dark: "bg-foreground text-white hover:bg-[#2b2b2b]",
+  secondary: "bg-paper text-foreground hover:bg-paper-2",
+  ghost: "text-foreground hover:bg-paper",
 };
 
 export default function Button({
@@ -18,6 +17,8 @@ export default function Button({
   variant = "primary",
   className,
   type = "button",
+  disabled,
+  external,
 }: {
   href?: string;
   onClick?: () => void;
@@ -25,9 +26,12 @@ export default function Button({
   variant?: Variant;
   className?: string;
   type?: "button" | "submit";
+  disabled?: boolean;
+  external?: boolean;
 }) {
   const cls = cn(
-    "inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-200 active:scale-[0.98]",
+    "inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 text-[16px] font-medium",
+    "transition-colors duration-200 active:translate-y-px disabled:opacity-60",
     styles[variant],
     className,
   );
@@ -35,12 +39,14 @@ export default function Button({
   if (href) {
     // A same-page anchor ("#try") must be a plain <a>. next/link resolves a bare
     // hash RELATIVE TO THE CURRENT URL, so once you are at "/#try" another click
-    // lands on "/#try#try", then "/#try#try#try" — the link appears to stop
-    // working. A plain anchor is what a hash link wants anyway: no routing, no
-    // prefetch, just scroll.
-    if (href.startsWith("#")) {
+    // lands on "/#try#try". A plain anchor is what a hash link wants anyway.
+    if (href.startsWith("#") || external) {
       return (
-        <a href={href} className={cls}>
+        <a
+          href={href}
+          className={cls}
+          {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+        >
           {children}
         </a>
       );
@@ -52,7 +58,7 @@ export default function Button({
     );
   }
   return (
-    <button type={type} onClick={onClick} className={cls}>
+    <button type={type} onClick={onClick} className={cls} disabled={disabled}>
       {children}
     </button>
   );

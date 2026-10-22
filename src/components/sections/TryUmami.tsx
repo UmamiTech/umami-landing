@@ -1,16 +1,16 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Container from "../ui/Container";
-import Section from "../ui/Section";
+import Headline from "../ui/Headline";
 import Reveal from "../ui/Reveal";
 import Button from "../ui/Button";
 import { QRCodeSVG } from "qrcode.react";
 import FoodCheck, { type FoodCheckValue } from "../ui/FoodCheck";
 import { APP_URL, DEMO_MENU_URL } from "@/lib/app";
 
-export default function TryUmami() {
+export default function TryUmami({ showReel = true }: { showReel?: boolean }) {
   const [email, setEmail] = useState("");
   const [restaurant, setRestaurant] = useState("");
   const [check, setCheck] = useState<FoodCheckValue | null>(null);
@@ -75,142 +75,157 @@ export default function TryUmami() {
   }
 
   return (
-    <Section
-      id="try"
-      eyebrow="Try Umami"
-      title={<>Two ways. <span className="brand-text">Both free.</span></>}
-      subtitle="See it on your own phone, or spin up a free trial restaurant in 60 seconds."
-    >
+    <section id="try" className="relative scroll-mt-20 bg-paper py-24 md:py-36">
       <Container>
-        <div className="grid md:grid-cols-2 gap-6">
-          {/* QR side */}
-          <Reveal>
-            <div className="relative h-full rounded-2xl border border-white/10 bg-card p-8 md:p-10 overflow-hidden">
-              <div className="absolute -top-20 -right-20 size-72 rounded-full bg-brand/10 blur-3xl" />
-              <div className="relative">
-                <div className="text-xs uppercase tracking-widest text-brand font-mono mb-3">
-                  Option 1
-                </div>
-                <h3 className="text-2xl md:text-3xl font-semibold tracking-tight mb-3">
-                  Scan and order on your real phone
-                </h3>
-                <p className="text-sm text-muted mb-7 max-w-sm">
-                  Demo restaurant. Live menu. Real flow. No staff to bother, no
-                  account to create.
-                </p>
+        <Headline lines={["Try it on", "your phone."]} className="text-[40px] md:text-[72px]" />
 
-                {/* A real, scannable QR. This used to be a decorative grid of
-                    pseudo-random squares: it looked like a QR code and no phone
-                    could read it, so "scan and order on your real phone" was
-                    impossible from this page. */}
-                <a
-                  href={DEMO_MENU_URL}
-                  className="bg-white p-5 rounded-2xl inline-block shadow-2xl"
-                  aria-label="Open the demo menu"
-                >
-                  <QRCodeSVG value={DEMO_MENU_URL} size={196} level="M" />
-                </a>
+        <div className="mt-16 grid gap-14 md:grid-cols-2 lg:grid-cols-12 lg:gap-10">
+          {showReel && (
+            <Reveal from="scale" className="hidden lg:col-span-3 lg:block">
+              <Reel />
+            </Reveal>
+          )}
 
-                <div className="mt-5 flex items-center gap-2 text-xs font-mono text-muted">
-                  <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  <a href={DEMO_MENU_URL} className="hover:text-foreground transition-colors">
-                    app.umami.com.ph/menu/demo
-                  </a>
-                </div>
-                <p className="mt-2 text-xs text-muted">
-                  On a laptop? Tap the code &mdash; it opens the same demo menu.
-                </p>
-              </div>
-            </div>
+          <Reveal className={showReel ? "lg:col-span-4" : "lg:col-span-5"}>
+            <h3 className="text-[26px] font-semibold leading-tight">Order from the demo restaurant</h3>
+            <p className="mt-3 max-w-sm text-[18px] text-muted">
+              A real menu at Umami Demo Kitchen, a made-up Filipino restaurant. No account, no staff to
+              bother. Your ticket shows up on the kitchen screen on our homepage.
+            </p>
+            <a
+              href={DEMO_MENU_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open the demo menu"
+              className="mt-8 inline-block rounded-[20px] bg-white p-5"
+            >
+              <QRCodeSVG value={DEMO_MENU_URL} size={184} level="M" fgColor="#121212" />
+            </a>
+            <p className="mt-4 text-[16px]">
+              <a
+                href={DEMO_MENU_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-brand-ink underline decoration-2 underline-offset-4"
+              >
+                app.umami.com.ph/menu/demo
+              </a>
+            </p>
           </Reveal>
 
-          {/* Trial form side */}
-          <Reveal delay={0.1}>
-            <div className="relative h-full rounded-2xl border border-white/10 bg-card p-8 md:p-10 overflow-hidden">
-              <div className="absolute -bottom-20 -left-20 size-72 rounded-full bg-violet-500/10 blur-3xl" />
-              <div className="relative h-full flex flex-col">
-                <div className="text-xs uppercase tracking-widest text-brand font-mono mb-3">
-                  Option 2
-                </div>
-                <h3 className="text-2xl md:text-3xl font-semibold tracking-tight mb-3">
-                  Start your own free trial
-                </h3>
-                <p className="text-sm text-muted mb-7 max-w-sm">
-                  We create your restaurant and email you an owner login. Free
-                  tier, no credit card, no sales call.
-                </p>
+          <Reveal delay={0.08} className={showReel ? "lg:col-span-5" : "lg:col-span-6 lg:col-start-7"}>
+            <h3 className="text-[26px] font-semibold leading-tight">Start your own restaurant, free</h3>
+            <p className="mt-3 max-w-md text-[18px] text-muted">
+              We set up your restaurant and email you an owner login. No card, no sales call.
+            </p>
 
-                {!submitted ? (
-                  <form onSubmit={submit} className="space-y-3 max-w-sm">
-                    <input
-                      type="text"
-                      placeholder="Restaurant name (optional)"
-                      value={restaurant}
-                      onChange={(e) => setRestaurant(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-brand/40 placeholder:text-muted"
-                    />
-                    <input
-                      type="email"
-                      placeholder="you@yourrestaurant.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-brand/40 placeholder:text-muted"
-                    />
-                    <FoodCheck onChange={setCheck} refreshKey={checkKey} />
-                    <Button type="submit" className="w-full">
-                      {sending ? "Creating your restaurant…" : "Get my free trial →"}
-                    </Button>
-                    {error && (
-                      <div className="text-xs text-red-400">{error}</div>
-                    )}
-                  </form>
-                ) : (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-5 max-w-sm"
-                  >
-                    <div className="flex items-center gap-2.5 text-emerald-400 mb-2">
-                      <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                      <span className="text-xs font-mono uppercase tracking-widest">
-                        On its way
-                      </span>
-                    </div>
-                    {/* The explicit {" "} on BOTH sides is load-bearing: JSX
-                        strips the leading whitespace of a text node that wraps
-                        onto another line, which is what glued the address to
-                        the following word ("you@example.comin the next…"). */}
-                    <p className="text-sm text-foreground/90">
-                      Your restaurant is ready. We sent your owner login to{" "}
-                      <strong>{email}</strong>{" "}
-                      &mdash; it should land within a minute. Check spam if it
-                      doesn&rsquo;t.
-                    </p>
-                    <a
-                      href={`${APP_URL}/login`}
-                      className="inline-block mt-3 text-xs font-mono text-brand hover:underline"
-                    >
-                      Go to sign in →
-                    </a>
-                  </motion.div>
+            {!submitted ? (
+              <form onSubmit={submit} className="mt-8 max-w-md space-y-4">
+                <label className="block">
+                  <span className="mb-1.5 block text-[16px] font-medium">Restaurant name, if you have one</span>
+                  <input
+                    type="text"
+                    placeholder="Lola's Kitchen"
+                    value={restaurant}
+                    onChange={(e) => setRestaurant(e.target.value)}
+                    className="h-12 w-full rounded-xl border border-black/15 bg-white px-4 text-[16px] outline-none placeholder:text-[#8a8a8a] focus:border-foreground"
+                  />
+                </label>
+                <label className="block">
+                  <span className="mb-1.5 block text-[16px] font-medium">Your email</span>
+                  <input
+                    type="email"
+                    placeholder="you@yourrestaurant.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="h-12 w-full rounded-xl border border-black/15 bg-white px-4 text-[16px] outline-none placeholder:text-[#8a8a8a] focus:border-foreground"
+                  />
+                </label>
+                <FoodCheck onChange={setCheck} refreshKey={checkKey} />
+                <Button type="submit" className="w-full" disabled={sending}>
+                  {sending ? "Setting up your restaurant…" : "Get my free restaurant"}
+                </Button>
+                {error && (
+                  <p role="alert" className="text-[16px] text-[#b42318]">
+                    {error}
+                  </p>
                 )}
+              </form>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mt-8 max-w-md rounded-[20px] bg-white p-6"
+              >
+                <p className="text-[19px] font-semibold text-[#1f7a46]">Your restaurant is ready.</p>
+                {/* The explicit {" "} on BOTH sides is load-bearing: JSX strips the
+                    leading whitespace of a text node that wraps onto another line. */}
+                <p className="mt-2 text-[18px]">
+                  We sent your owner login to{" "}
+                  <strong>{email}</strong>{" "}
+                  and it should land within a minute. Check spam if it doesn&rsquo;t.
+                </p>
+                <a
+                  href={`${APP_URL}/login`}
+                  className="mt-4 inline-block font-medium text-brand-ink underline decoration-2 underline-offset-4"
+                >
+                  Go to sign in
+                </a>
+              </motion.div>
+            )}
 
-                <div className="mt-auto pt-7 text-xs text-muted">
-                  Already a customer?{" "}
-                  <a
-                    href="https://app.umami.com.ph"
-                    className="text-brand hover:underline"
-                  >
-                    Sign in →
-                  </a>
-                </div>
-              </div>
-            </div>
+            <p className="mt-8 text-[16px] text-muted">
+              Already with us?{" "}
+              <a href="https://app.umami.com.ph" className="font-medium text-brand-ink underline decoration-2 underline-offset-4">
+                Sign in
+              </a>
+            </p>
           </Reveal>
         </div>
       </Container>
-    </Section>
+    </section>
   );
 }
 
+/**
+ * The 15-second film. Muted, plays only while on screen, never on its own for
+ * a visitor who has asked for less motion (they get the poster and a play
+ * control). preload="none": it costs nothing until it is scrolled to.
+ */
+function Reel() {
+  const ref = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      v.controls = true;
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) v.play().catch(() => {});
+        else v.pause();
+      },
+      { threshold: 0.4 },
+    );
+    io.observe(v);
+    return () => io.disconnect();
+  }, []);
+  return (
+    <figure>
+      <video
+        ref={ref}
+        src="/reel/umami-15s.mp4"
+        poster="/reel/poster.jpg"
+        muted
+        loop
+        playsInline
+        preload="none"
+        aria-label="A 15-second film of Umami: a guest taps to order, the bill updates live, and orders keep going when the internet is down."
+        className="aspect-[9/16] w-full rounded-[28px] bg-kitchen object-cover"
+      />
+      <figcaption className="mt-3 text-[14px] text-muted">Umami in 15 seconds.</figcaption>
+    </figure>
+  );
+}

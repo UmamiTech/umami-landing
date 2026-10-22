@@ -70,17 +70,17 @@ export default function FoodCheck({
   }
 
   return (
-    <div className="rounded-xl border border-white/10 bg-white/5 p-4">
+    <div data-ui className="ui-card p-4">
       <div className="flex items-center justify-between mb-3">
-        <span className="text-[11px] uppercase tracking-widest font-mono text-brand">
+        <span className="text-[15px] font-medium">
           {challenge ? challenge.prompt : "Quick food check"}
         </span>
         <button
           type="button"
           onClick={load}
-          className="text-[11px] font-mono text-muted hover:text-foreground transition-colors"
+          className="text-[14px] font-medium text-brand-ink hover:underline"
         >
-          ↻ New
+          Show another
         </button>
       </div>
 
@@ -89,17 +89,17 @@ export default function FoodCheck({
           {Array.from({ length: 9 }).map((_, i) => (
             <div
               key={i}
-              className="aspect-square rounded-lg bg-white/5 animate-pulse"
+              className="aspect-square rounded-lg bg-black/5"
             />
           ))}
         </div>
       ) : failed ? (
-        <p className="text-xs text-muted py-3 text-center">
+        <p className="text-[14px] text-[#6b6b6b] py-3 text-center">
           Couldn&rsquo;t load the check.{" "}
           <button
             type="button"
             onClick={load}
-            className="text-brand hover:underline"
+            className="font-medium text-brand-ink underline"
           >
             Try again
           </button>
@@ -114,10 +114,10 @@ export default function FoodCheck({
                 type="button"
                 onClick={() => toggle(tile.id)}
                 aria-pressed={isSelected}
-                className={`aspect-square rounded-lg text-2xl flex items-center justify-center transition-all active:scale-95 ${
+                className={`aspect-square rounded-lg text-2xl flex items-center justify-center transition-colors ${
                   isSelected
-                    ? "bg-brand/15 border border-brand/50 scale-95"
-                    : "bg-white/5 border border-white/10 hover:bg-white/10"
+                    ? "bg-[#fdebdc] border-2 border-brand"
+                    : "bg-[#f7f7f5] border border-black/10 hover:bg-[#efefec]"
                 }`}
               >
                 <span aria-hidden="true">{tile.emoji}</span>
@@ -127,7 +127,7 @@ export default function FoodCheck({
         </div>
       )}
 
-      <p className="text-[11px] text-muted mt-2">
+      <p className="text-[13px] text-[#6b6b6b] mt-2">
         Tap every match, then continue.
       </p>
     </div>

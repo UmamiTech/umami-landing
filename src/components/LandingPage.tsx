@@ -4,6 +4,9 @@ import Pricing from "@/components/sections/Pricing";
 import TryUmami from "@/components/sections/TryUmami";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
+import Reveal from "@/components/ui/Reveal";
+import Image from "next/image";
+import { DISH_SOURCE, MENU_DISHES, money } from "@/lib/dishes";
 import { LANDING_PAGES, PROOF_LINKS, type LandingPageContent } from "@/lib/landingPages";
 import { SITE_URL, jsonLd } from "@/lib/site";
 import type { Metadata } from "next";
@@ -66,7 +69,7 @@ export default function LandingPage({ slug }: { slug: string }) {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Umami", item: SITE_URL },
-        { "@type": "ListItem", position: 2, name: p.eyebrow, item: `${SITE_URL}/${p.slug}` },
+        { "@type": "ListItem", position: 2, name: p.eyebrow, item: /* taste-skill-ignore: breadcrumb data, not a label */ `${SITE_URL}/${p.slug}` },
       ],
     },
   ];
@@ -75,22 +78,16 @@ export default function LandingPage({ slug }: { slug: string }) {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(structured)} />
       <Nav />
-      <main className="relative">
+      <main>
         {/* Hero */}
-        <section className="relative pt-36 pb-16 md:pt-44 md:pb-20">
+        <section className="relative pt-36 pb-16 md:pt-44 md:pb-24">
           <Container>
-            <div className="mx-auto max-w-3xl text-center">
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs uppercase tracking-widest text-muted font-mono">
-                <span className="size-1.5 rounded-full bg-brand animate-pulse-glow" />
-                {p.eyebrow}
-              </div>
-              <h1 className="text-balance text-4xl md:text-6xl tracking-tight leading-[1.05] gradient-text">
-                {p.h1}
-              </h1>
-              <p className="mt-6 text-balance text-lg md:text-xl text-muted">{p.lede}</p>
-              <div className="mt-9 flex flex-wrap justify-center gap-3">
-                <Button href="#try">Try free →</Button>
-                <Button href="https://app.umami.com.ph/menu/demo" variant="secondary">
+            <div className="max-w-4xl">
+              <h1 className="text-[34px] sm:text-[48px] lg:text-[64px]">{p.h1}</h1>
+              <p className="mt-8 max-w-2xl text-[19px] leading-[1.5] text-muted md:text-[21px]">{p.lede}</p>
+              <div className="mt-10 flex flex-wrap gap-3">
+                <Button href="#try">Try free</Button>
+                <Button href="https://app.umami.com.ph/menu/demo" variant="secondary" external>
                   Order from the demo
                 </Button>
               </div>
@@ -99,49 +96,64 @@ export default function LandingPage({ slug }: { slug: string }) {
         </section>
 
         {/* Body */}
-        <section className="relative pb-20">
+        <section className="relative pb-24 md:pb-32">
           <Container>
-            <div className="mx-auto max-w-3xl space-y-12">
-              {p.sections.map((s) => (
-                <div key={s.heading}>
-                  <h2 className="text-2xl md:text-3xl tracking-tight text-foreground">
-                    {s.heading}
-                  </h2>
-                  {s.body?.map((para, i) => (
-                    <p key={i} className="mt-4 text-base md:text-lg leading-relaxed text-foreground/80">
-                      {para}
-                    </p>
-                  ))}
-                  {s.bullets && (
-                    <ul className="mt-5 space-y-3">
-                      {s.bullets.map((b) => (
-                        <li key={b} className="flex gap-3 text-base md:text-lg text-foreground/80">
-                          <span className="mt-2.5 size-1.5 shrink-0 rounded-full bg-brand" />
-                          <span>{b}</span>
+            <div className="grid gap-16 lg:grid-cols-12 lg:gap-10">
+              <div className="space-y-14 lg:col-span-7">
+                {p.sections.map((s) => (
+                  <Reveal key={s.heading}>
+                    <h2 className="text-[30px] md:text-[38px]">{s.heading}</h2>
+                    {s.body?.map((para, i) => (
+                      <p key={i} className="mt-5 text-[18px] leading-[1.6]">
+                        {para}
+                      </p>
+                    ))}
+                    {s.bullets && (
+                      <ul className="mt-5 space-y-3">
+                        {s.bullets.map((b) => (
+                          <li key={b} className="flex gap-3 text-[18px] leading-[1.55]">
+                            <span className="mt-[11px] size-1.5 shrink-0 rounded-full bg-brand" aria-hidden="true" />
+                            <span>{b}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </Reveal>
+                ))}
+              </div>
+
+              <aside className="lg:col-span-4 lg:col-start-9">
+                <Reveal className="rounded-[24px] bg-paper p-7 lg:sticky lg:top-28">
+                  <h2 className="font-sans text-[22px] font-semibold tracking-normal">See it running</h2>
+                  <p className="mt-2 text-[17px] text-muted">These restaurants take orders on Umami every day:</p>
+                  <ul className="mt-4 space-y-2">
+                    {PROOF_LINKS.map((l) => (
+                      <li key={l.href}>
+                        <a href={l.href} className="text-[17px] font-medium text-brand-ink underline decoration-2 underline-offset-4">
+                          {l.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                  <figure className="mt-8">
+                    <ul className="grid grid-cols-2 gap-4">
+                      {MENU_DISHES.slice(0, 4).map((d) => (
+                        <li key={d.id}>
+                          <div className="relative aspect-square">
+                            <Image src={d.photo} alt={d.name} fill sizes="160px" className="dish object-contain" />
+                          </div>
+                          <p className="mt-1 text-[14px] leading-snug">
+                            {d.name}, {money(d.price)}
+                          </p>
                         </li>
                       ))}
                     </ul>
-                  )}
-                </div>
-              ))}
-
-              <div className="rounded-2xl border border-white/10 bg-card p-6 md:p-8">
-                <div className="text-xs uppercase tracking-widest text-muted font-mono mb-3">
-                  See it live
-                </div>
-                <p className="text-foreground/80">
-                  These restaurants take orders on Umami every day:
-                </p>
-                <ul className="mt-3 space-y-1.5">
-                  {PROOF_LINKS.map((l) => (
-                    <li key={l.href}>
-                      <a href={l.href} className="text-brand hover:underline">
-                        {l.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                    <figcaption className="mt-4 text-[14px] text-muted">
+                      Ordered from the table on Umami at {DISH_SOURCE}.
+                    </figcaption>
+                  </figure>
+                </Reveal>
+              </aside>
             </div>
           </Container>
         </section>
@@ -149,21 +161,23 @@ export default function LandingPage({ slug }: { slug: string }) {
         {p.showPricing && <Pricing />}
 
         {/* FAQ */}
-        <section className="relative pb-8">
+        <section className="relative pb-24 md:pb-32">
           <Container>
-            <div className="mx-auto max-w-3xl">
-              <h2 className="text-2xl md:text-3xl tracking-tight text-foreground mb-6">
-                Questions
-              </h2>
-              <div className="divide-y divide-white/10 rounded-2xl border border-white/10 bg-card">
-                {p.faqs.map((f) => (
-                  <details key={f.q} className="group p-5 md:p-6">
-                    <summary className="cursor-pointer list-none flex justify-between gap-4 font-medium text-foreground">
+            <div className="max-w-3xl">
+              <h2 className="text-[38px] md:text-[48px]">Questions</h2>
+              <div className="mt-10 space-y-3">
+                {p.faqs.map((f, i) => (
+                  <Reveal key={f.q} delay={Math.min(i, 4) * 0.05}>
+                  <details className="group rounded-[20px] bg-paper px-6 py-5">
+                    <summary className="flex cursor-pointer list-none justify-between gap-6 text-[19px] font-semibold">
                       {f.q}
-                      <span className="text-brand transition-transform group-open:rotate-45">+</span>
+                      <span className="text-[24px] leading-none text-brand-ink transition-transform duration-300 group-open:rotate-45" aria-hidden="true">
+                        +
+                      </span>
                     </summary>
-                    <p className="mt-3 text-foreground/75 leading-relaxed">{f.a}</p>
+                    <p className="mt-3 text-[18px] leading-[1.6]">{f.a}</p>
                   </details>
+                  </Reveal>
                 ))}
               </div>
             </div>
@@ -173,19 +187,18 @@ export default function LandingPage({ slug }: { slug: string }) {
         <TryUmami />
 
         {/* Related pages */}
-        <section className="relative pb-10">
+        <section className="relative py-20">
           <Container>
-            <div className="mx-auto max-w-3xl flex flex-wrap gap-2 justify-center">
+            <h2 className="font-sans text-[22px] font-semibold tracking-normal">Read next</h2>
+            <ul className="mt-5 flex flex-wrap gap-x-8 gap-y-3">
               {RELATED.filter((r) => r.slug !== p.slug).map((r) => (
-                <a
-                  key={r.slug}
-                  href={`/${r.slug}`}
-                  className="rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm text-muted hover:text-foreground hover:border-brand/40 transition-colors"
-                >
-                  {r.label}
-                </a>
+                <li key={r.slug}>
+                  <a href={`/${r.slug}`} className="text-[18px] text-brand-ink underline decoration-2 underline-offset-4">
+                    {r.label}
+                  </a>
+                </li>
               ))}
-            </div>
+            </ul>
           </Container>
         </section>
       </main>

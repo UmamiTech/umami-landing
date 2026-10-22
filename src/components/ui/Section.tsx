@@ -1,41 +1,48 @@
 import { cn } from "@/lib/utils";
+import Container from "./Container";
+import Headline from "./Headline";
 
+/**
+ * A section with its heading. The heading is the claim; `lede` is the one
+ * sentence of proof under it. No labels above headings, ever.
+ */
 export default function Section({
   id,
   children,
   className,
-  eyebrow,
   title,
-  subtitle,
+  lede,
+  align = "left",
+  tone = "white",
 }: {
   id?: string;
   children: React.ReactNode;
   className?: string;
-  eyebrow?: string;
-  title?: React.ReactNode;
-  subtitle?: React.ReactNode;
+  title?: string[];
+  lede?: React.ReactNode;
+  align?: "left" | "center";
+  tone?: "white" | "paper";
 }) {
   return (
-    <section id={id} className={cn("relative py-24 md:py-32", className)}>
-      {(eyebrow || title || subtitle) && (
-        <div className="mx-auto mb-14 max-w-3xl text-center">
-          {eyebrow && (
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs uppercase tracking-widest text-muted font-mono">
-              <span className="size-1.5 rounded-full bg-brand animate-pulse-glow" />
-              {eyebrow}
-            </div>
-          )}
-          {title && (
-            <h2 className="text-balance text-4xl md:text-5xl lg:text-6xl tracking-tight gradient-text">
-              {title}
-            </h2>
-          )}
-          {subtitle && (
-            <p className="mt-5 text-balance text-base md:text-lg text-muted">
-              {subtitle}
-            </p>
-          )}
-        </div>
+    <section
+      id={id}
+      className={cn(
+        "relative scroll-mt-20 py-24 md:py-36",
+        tone === "paper" && "bg-paper",
+        className,
+      )}
+    >
+      {title && (
+        <Container>
+          <div className={cn("mb-12 md:mb-16 max-w-3xl", align === "center" && "mx-auto text-center")}>
+            <Headline lines={title} className="text-[40px] md:text-[72px]" />
+            {lede && (
+              <p className={cn("mt-8 max-w-xl text-[18px] md:text-[21px] leading-[1.5] text-muted", align === "center" && "mx-auto")}>
+                {lede}
+              </p>
+            )}
+          </div>
+        </Container>
       )}
       {children}
     </section>

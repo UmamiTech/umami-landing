@@ -1,9 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { animate, useInView } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import Container from "../ui/Container";
-import Section from "../ui/Section";
+import Headline from "../ui/Headline";
 import Reveal from "../ui/Reveal";
 import Button from "../ui/Button";
 import { cn, peso } from "@/lib/utils";
@@ -166,192 +166,200 @@ function useFoundingOffer(): FoundingState | null {
   return state;
 }
 
+/** The founding figure rolls up once to its value when it comes into view. */
+function RollingNumber({ value }: { value: number }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, margin: "0px 0px -12% 0px" });
+  const [shown, setShown] = useState(value);
+  const armed = useRef(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (el.getBoundingClientRect().top > window.innerHeight) {
+      armed.current = true;
+      setShown(0);
+    }
+  }, []);
+  useEffect(() => {
+    if (!inView) return;
+    if (!armed.current) {
+      setShown(value);
+      return;
+    }
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setShown(value);
+      return;
+    }
+    const controls = animate(0, value, {
+      duration: 1.2,
+      ease: [0.16, 1, 0.3, 1],
+      onUpdate: (v) => setShown(Math.round(v)),
+    });
+    return () => controls.stop();
+  }, [inView, value]);
+  return (
+    <span ref={ref} className="tabular-nums">
+      {shown}
+    </span>
+  );
+}
+
+const Check = () => (
+  <svg className="mt-[5px] size-4 shrink-0 text-brand-ink" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+  </svg>
+);
+
+const priceText = (n: number) => peso(n).replace(".00", "");
+
 export default function Pricing() {
   const [annual, setAnnual] = useState(false);
+  // On a phone each tier's feature list is folded away until asked for; four
+  // long lists stacked one under another is most of the page's length there.
+  const [openTier, setOpenTier] = useState<string | null>(null);
   const founding = useFoundingOffer();
 
   return (
-    <Section
-      id="pricing"
-      eyebrow="Pricing"
-      title={<>Start free.<br /><span className="brand-text">Scale when you grow.</span></>}
-      subtitle="Starter is free forever for the first 100 restaurants. Start there and upgrade inside the app whenever you're ready — no call, no contract."
-    >
+    <section id="pricing" className="relative scroll-mt-20 py-24 md:py-36">
       <Container>
-        <Reveal>
-          <div className="flex justify-center mb-12">
-            <div className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-card p-1">
-              <button
-                onClick={() => setAnnual(false)}
-                className={cn(
-                  "px-4 py-1.5 rounded-full text-sm font-medium transition-all",
-                  !annual ? "bg-brand text-black" : "text-muted hover:text-foreground",
-                )}
-              >
-                Monthly
-              </button>
-              <button
-                onClick={() => setAnnual(true)}
-                className={cn(
-                  "px-4 py-1.5 rounded-full text-sm font-medium transition-all flex items-center gap-2",
-                  annual ? "bg-brand text-black" : "text-muted hover:text-foreground",
-                )}
-              >
-                Annual
-                <span
-                  className={cn(
-                    "text-[10px] font-mono uppercase tracking-widest px-1.5 py-0.5 rounded",
-                    annual ? "bg-black/20 text-black" : "bg-brand/15 text-brand",
-                  )}
-                >
-                  −2 mo
-                </span>
-              </button>
-            </div>
+        <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
+          <div className="lg:col-span-7">
+            <Headline lines={["Start free.", "Pay as you grow."]} className="text-[40px] md:text-[72px]" />
+            <p className="mt-8 max-w-xl text-[18px] leading-[1.5] text-muted md:text-[21px]">
+              Start on Starter and upgrade inside the app whenever you are ready. No call, no contract,
+              no card for the free plan.
+            </p>
           </div>
-        </Reveal>
+          <div className="lg:col-span-5">
+            {founding?.open ? (
+              <p>
+                <span className="block font-display text-[72px] leading-none tracking-[-0.03em]">
+                  <RollingNumber value={founding.left} /> of {founding.limit}
+                </span>
+                <span className="mt-3 block max-w-sm text-[18px]">
+                  founding places are still open. Those restaurants keep Starter free, for as long as
+                  they stay.
+                </span>
+              </p>
+            ) : null}
+          </div>
+        </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-          {tiers.map((tier, i) => (
-            <Reveal key={tier.name} delay={i * 0.07}>
-              <motion.div
-                whileHover={{ y: -6 }}
-                transition={{ duration: 0.3 }}
+        <div className="mt-14 flex">
+          <div role="group" aria-label="Billing period" className="inline-flex rounded-full bg-paper p-1">
+            {[
+              { v: false, label: "Monthly" },
+              { v: true, label: "Yearly, 2 months free" },
+            ].map((o) => (
+              <button
+                key={o.label}
+                type="button"
+                aria-pressed={annual === o.v}
+                onClick={() => setAnnual(o.v)}
                 className={cn(
-                  "relative h-full rounded-2xl border p-6 flex flex-col",
-                  tier.highlight
-                    ? "border-brand/50 bg-gradient-to-b from-brand/[0.08] to-transparent shadow-[0_0_60px_-20px_var(--brand-glow)]"
-                    : "border-white/10 bg-card",
+                  "min-h-11 rounded-full px-5 text-[16px] font-medium transition-colors duration-200",
+                  annual === o.v ? "bg-foreground text-white" : "text-foreground hover:bg-paper-2",
                 )}
               >
-                {tier.price === 0 && founding?.open ? (
-                  /* The live countdown. Only rendered once the app has answered,
-                     so the number on screen is always a real one. */
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-brand text-black text-[10px] font-bold uppercase tracking-widest font-mono whitespace-nowrap">
-                    {founding.left} of {founding.limit} left
-                  </div>
-                ) : (
-                  tier.highlight && (
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-brand text-black text-[10px] font-bold uppercase tracking-widest font-mono">
-                      Most popular
-                    </div>
-                  )
-                )}
-                <div className="mb-4">
-                  <div className="text-xs uppercase tracking-widest text-brand font-mono mb-1.5">
-                    {tier.tag}
-                  </div>
-                  <h3 className="text-2xl font-semibold">{tier.name}</h3>
-                </div>
+                {o.label}
+              </button>
+            ))}
+          </div>
+        </div>
 
-                <div className="mb-5">
+        <div className="mt-10 grid gap-x-6 gap-y-14 md:grid-cols-2 lg:grid-cols-4">
+          {tiers.map((tier, i) => (
+            <Reveal key={tier.name} delay={i * 0.07} className="h-full">
+              <div
+                className={cn(
+                  "flex h-full flex-col",
+                  tier.highlight ? "rounded-[24px] bg-paper p-7 lg:-mt-7" : "md:py-7",
+                )}
+              >
+                <h3 className="text-[24px] font-semibold">{tier.name}</h3>
+
+                <div className="mt-6 min-h-[92px]">
                   {tier.price === 0 ? (
-                    /* "Free forever" is the founding promise: true for the first
-                       100 restaurants, and true FOREVER for each of them. Once
-                       the places are gone it stops being true for new signups,
-                       so the card starts quoting the real price instead. */
                     founding && !founding.open ? (
                       <>
-                        <div className="flex items-baseline gap-1">
-                          <span className="text-4xl font-bold">
-                            {peso(founding.starterPrice).replace(".00", "")}
-                          </span>
-                          <span className="text-sm text-muted">/mo</span>
-                        </div>
-                        <div className="mt-1 text-xs text-muted">
-                          The 100 free places have all been claimed.
-                        </div>
+                        <span className="font-display text-[48px] leading-none tracking-[-0.03em]">
+                          {priceText(founding.starterPrice)}
+                        </span>
+                        <span className="ml-1 text-[16px] text-muted">/mo</span>
+                        <p className="mt-2 text-[16px] text-muted">The 100 free places have all been claimed.</p>
                       </>
                     ) : (
                       <>
-                        <div className="flex items-baseline gap-1">
-                          <span className="text-4xl font-bold">Free</span>
-                          <span className="text-sm text-muted">forever</span>
-                        </div>
+                        <span className="font-display text-[48px] leading-none tracking-[-0.03em]">Free</span>
+                        <span className="ml-2 text-[16px] text-muted">forever</span>
                         {founding?.open && (
-                          <div className="mt-1 text-xs text-muted">
-                            For the first {founding.limit} restaurants — then{" "}
-                            {peso(founding.starterPrice).replace(".00", "")}/mo.
-                            Claim a place and yours stays free.
-                          </div>
+                          <p className="mt-2 text-[16px] text-muted">
+                            For the first {founding.limit} restaurants, then {priceText(founding.starterPrice)}/mo.
+                          </p>
                         )}
                       </>
                     )
                   ) : (
-                    <div className="flex items-baseline gap-1">
-                      <span className="text-4xl font-bold">
-                        {peso(annual ? Math.round(tier.price * 10) / 12 : tier.price)
-                          .replace(".00", "")
-                          .replace(/,(\d{3})$/, ",$1")}
+                    <>
+                      <span className="font-display text-[48px] leading-none tracking-[-0.03em] tabular-nums">
+                        {priceText(annual ? Math.round((tier.price * 10) / 12) : tier.price)}
                       </span>
-                      <span className="text-sm text-muted">{tier.suffix}</span>
-                    </div>
-                  )}
-                  {tier.extra && (
-                    <div className="mt-1 text-xs text-muted">{tier.extra}</div>
+                      <span className="ml-1 text-[16px] text-muted">{tier.suffix}</span>
+                      {annual && (
+                        <p className="mt-2 text-[16px] text-muted">
+                          {priceText(tier.price * 10)} billed once a year.
+                        </p>
+                      )}
+                      {tier.extra && <p className="mt-2 text-[16px] text-muted">{tier.extra.replace(/^\+ /, "Plus ")}</p>}
+                    </>
                   )}
                 </div>
 
-                <p className="text-sm text-muted mb-5">{tier.desc}</p>
+                <p className="mt-4 text-[16px]">
+                  {tier.desc}
+                  {tier.highlight ? " The plan most restaurants choose." : ""}
+                </p>
 
-                <ul className="space-y-2.5 mb-7 flex-1">
+                <Button
+                  href={tier.href}
+                  variant={tier.highlight ? "primary" : "dark"}
+                  className="mt-6 w-full"
+                >
+                  {tier.cta}
+                </Button>
+
+                <button
+                  type="button"
+                  aria-expanded={openTier === tier.name}
+                  onClick={() => setOpenTier(openTier === tier.name ? null : tier.name)}
+                  className="mt-5 self-start text-[16px] font-medium text-brand-ink underline decoration-2 underline-offset-4 md:hidden"
+                >
+                  {openTier === tier.name ? "Hide what's included" : "What's included"}
+                </button>
+                <ul className={cn("mt-5 space-y-2.5 md:mt-8 md:block", openTier === tier.name ? "block" : "hidden")}>
                   {tier.features.map((f) => (
-                    <li
-                      key={f}
-                      className={cn(
-                        "flex items-start gap-2.5 text-sm",
-                        "text-foreground/85",
-                      )}
-                    >
-                      <svg
-                        className={cn(
-                          "size-4 mt-0.5 shrink-0",
-                          "text-brand",
-                        )}
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth={2.5}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
+                    <li key={f} className="flex gap-2.5 text-[16px] leading-[1.4]">
+                      <Check />
                       <span>{f}</span>
                     </li>
                   ))}
                 </ul>
-
-                <Button
-                  href={tier.href}
-                  variant={tier.highlight ? "primary" : "secondary"}
-                  className="w-full"
-                >
-                  {tier.cta}
-                </Button>
-              </motion.div>
+              </div>
             </Reveal>
           ))}
         </div>
 
-        <Reveal delay={0.3}>
-          <div className="mt-10 rounded-2xl border border-white/10 bg-card p-6 md:p-8 text-center">
-            <div className="text-xs uppercase tracking-widest text-brand font-mono mb-2">
-              Enterprise
-            </div>
-            <h3 className="text-2xl font-semibold mb-2">
-              Running 10+ branches? Hotel group? Franchisor?
-            </h3>
-            <p className="text-sm text-muted mb-5 max-w-2xl mx-auto">
-              Custom infra, SLA, dedicated dev, on-site training, white-label,
-              API access. Starting at ₱30,000/mo.
-            </p>
-            <Button href="#contact">Talk to sales</Button>
-          </div>
+        <Reveal className="mt-20">
+          <p className="max-w-3xl text-[18px] leading-[1.5] md:text-[21px]">
+            <span className="font-semibold">Ten branches or more, a hotel group, a franchise?</span>{" "}
+            We set up custom infrastructure, an SLA, on-site training and API access, from ₱30,000 a
+            month.{" "}
+            <a href="#contact" className="font-medium text-brand-ink underline decoration-2 underline-offset-4">
+              Talk to sales
+            </a>
+          </p>
         </Reveal>
       </Container>
-    </Section>
+    </section>
   );
 }

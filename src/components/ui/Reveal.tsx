@@ -2,15 +2,27 @@
 
 import { motion, type HTMLMotionProps } from "framer-motion";
 
-type Props = HTMLMotionProps<"div"> & { delay?: number };
+/**
+ * A section part arriving once, as it scrolls into view: it rises a little and
+ * settles. Fires when its top is about 88% of the way down the screen.
+ * `from="scale"` is for pictures, which settle from a slight enlargement instead.
+ */
+type Props = HTMLMotionProps<"div"> & { delay?: number; from?: "rise" | "scale" | "fade" };
 
-export default function Reveal({ children, delay = 0, ...rest }: Props) {
+const START = {
+  rise: { opacity: 0, y: 24 },
+  scale: { opacity: 0, scale: 1.06 },
+  fade: { opacity: 0 },
+};
+
+export default function Reveal({ children, delay = 0, from = "rise", ...rest }: Props) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.7, delay, ease: [0.2, 0.8, 0.2, 1] }}
+      data-reveal
+      initial={START[from]}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, margin: "0px 0px -12% 0px" }}
+      transition={{ duration: from === "scale" ? 1.1 : 0.8, delay, ease: [0.16, 1, 0.3, 1] }}
       {...rest}
     >
       {children}

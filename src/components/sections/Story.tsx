@@ -1,101 +1,55 @@
-"use client";
-
-import { motion } from "framer-motion";
 import Container from "../ui/Container";
-import Section from "../ui/Section";
-import Reveal from "../ui/Reveal";
+import Headline from "../ui/Headline";
+import BrandIcon from "../ui/BrandIcon";
 
 const beats = [
-  {
-    year: "2018",
-    title: "Opened a restaurant",
-    body: "I'm a restaurateur, not a coder. I lived the chaos before I solved it.",
-  },
-  {
-    year: "2018-2021",
-    title: "Tried every solution",
-    body: "Table beepers. Tablets. POS terminals costing six figures. They all broke. We always crawled back to pen and paper.",
-  },
-  {
-    year: "2022",
-    title: "Started building Umami",
-    body: "I built the operating system I needed — as a customer, as an owner, as someone who refused to accept that this is just how restaurants work.",
-  },
-  {
-    year: "2024",
-    title: "First chains went live",
-    body: "Romantic Baboy. Kalei Cafe Bar. Real branches. Real volume. Real proof.",
-  },
-  {
-    year: "2025",
-    title: "Built for bad internet",
-    body: "Restaurants can now run a full night without internet. Zero downtime.",
-  },
-  {
-    year: "2026",
-    title: "Scaling to every restaurant in PH",
-    body: "Free tier launched. Goal: every café and restaurant in the Philippines, on Umami.",
-  },
+  { year: "2018", title: "Opened a restaurant", body: "A restaurateur, not a coder. I lived the chaos before I tried to fix it." },
+  { year: "2018 to 2021", title: "Tried everything", body: "Table beepers, tablets, POS terminals costing six figures. They broke, and we went back to pen and paper." },
+  { year: "2022", title: "Started building Umami", body: "The system I needed as a guest and as an owner, written by someone who has worked the floor." },
+  { year: "2024", title: "First chains went live", body: "Romantic Baboy and Kalei Cafe Bar. Real branches, real volume." },
+  { year: "2025", title: "Built for bad internet", body: "Restaurants can run a full night without a connection." },
+  { year: "2026", title: "Open to every restaurant", body: "A free plan for the first hundred. The goal: every café and restaurant in the Philippines." },
 ];
 
 export default function Story() {
   return (
-    <Section
-      id="story"
-      eyebrow="The story"
-      title={<><span className="gradient-text">From a restaurant floor</span><br /><span className="brand-text">to an operating system.</span></>}
-    >
+    <section id="story" className="relative scroll-mt-20 py-24 md:py-36">
       <Container>
-        <div className="mx-auto max-w-3xl">
-          {/* Founder note */}
-          <Reveal>
-            <div className="rounded-2xl border border-brand/20 bg-gradient-to-br from-brand/[0.06] to-transparent p-7 md:p-10 mb-16">
-              <div className="text-xs uppercase tracking-widest text-brand font-mono mb-5">
-                A note from the founder
-              </div>
-              <blockquote className="text-xl md:text-2xl leading-relaxed text-foreground/90 font-medium">
-                &ldquo;In 2018, I opened a restaurant. By 2022, I built the
-                software I wished existed. We&rsquo;re not digitizing restaurants
-                — we&rsquo;re rewriting how they run.&rdquo;
+        <div className="grid gap-16 lg:grid-cols-12 lg:gap-10">
+          <div className="lg:col-span-6">
+            <Headline lines={["Built on a", "restaurant floor."]} className="text-[40px] md:text-[72px]" />
+            <div className="mt-12">
+              <blockquote className="max-w-lg text-[24px] leading-[1.35] lg:text-[32px]">
+                &ldquo;In 2018 I opened a restaurant. By 2022 I had built the software I wished it had
+                from day one.&rdquo;
               </blockquote>
               <div className="mt-6 flex items-center gap-3">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/logos/umami-icon.svg"
-                  alt="Umami"
-                  className="size-10 rounded-full bg-black p-1.5"
-                />
-                <div>
-                  <div className="text-sm font-semibold">Sean Lim</div>
-                  <div className="text-xs text-muted">Founder, Umami</div>
+                <BrandIcon className="size-11" />
+                <div className="text-[16px] leading-tight">
+                  <div className="font-semibold">Sean Lim</div>
+                  <div className="text-muted">Founder, Umami</div>
                 </div>
               </div>
             </div>
-          </Reveal>
-
-          {/* Timeline */}
-          <div className="relative pl-10 md:pl-14">
-            <div className="absolute left-3 md:left-5 top-0 bottom-0 w-px bg-gradient-to-b from-brand via-white/10 to-transparent" />
-            {beats.map((b, i) => (
-              <Reveal key={b.year} delay={i * 0.05}>
-                <motion.div
-                  whileHover={{ x: 4 }}
-                  className="relative pb-12 last:pb-0"
-                >
-                  <div className="absolute -left-[34px] md:-left-[42px] top-1.5 size-3 rounded-full bg-brand shadow-[0_0_20px_4px_var(--brand-glow)]" />
-                  <div className="text-xs font-mono uppercase tracking-widest text-brand mb-2">
-                    {b.year}
-                  </div>
-                  <h3 className="text-2xl md:text-3xl font-semibold tracking-tight mb-2">
-                    {b.title}
-                  </h3>
-                  <p className="text-muted leading-relaxed max-w-xl">{b.body}</p>
-                </motion.div>
-              </Reveal>
-            ))}
           </div>
+
+          <ol className="lg:col-span-6 lg:pt-4">
+            {beats.map((b, i) => (
+              <li key={b.year} className={i ? "mt-10" : ""}>
+                <div>
+                  <div className="grid grid-cols-[7.5rem_1fr] gap-4 md:grid-cols-[9rem_1fr]">
+                    <div className="pt-1 text-[16px] font-medium tabular-nums text-brand-ink">{b.year}</div>
+                    <div>
+                      <h3 className="text-[21px] font-semibold leading-tight">{b.title}</h3>
+                      <p className="mt-1.5 text-[18px] text-muted">{b.body}</p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ol>
         </div>
       </Container>
-    </Section>
+    </section>
   );
 }

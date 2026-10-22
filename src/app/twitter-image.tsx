@@ -18,25 +18,25 @@ export default function Image() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "72px 80px",
-          background: "linear-gradient(135deg, #08080b 0%, #1a0f06 100%)",
-          color: "#f5f5f7",
+          background: "#ffffff",
+          color: "#121212",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", fontSize: 44, fontWeight: 700, color: "#e87a1e" }}>
+        <div style={{ display: "flex", alignItems: "center", fontSize: 44, fontWeight: 700, color: "#a9500a" }}>
           umami
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 72, fontWeight: 700, lineHeight: 1.05, letterSpacing: -2 }}>
             QR ordering for restaurants.
           </div>
-          <div style={{ fontSize: 72, fontWeight: 700, lineHeight: 1.05, letterSpacing: -2, color: "#e87a1e" }}>
+          <div style={{ fontSize: 72, fontWeight: 700, lineHeight: 1.05, letterSpacing: -2, color: "#a9500a" }}>
             Works with your POS.
           </div>
-          <div style={{ marginTop: 28, fontSize: 32, color: "#a1a1aa" }}>
-            Scan. Order. Straight to the kitchen. Free to start.
+          <div style={{ marginTop: 28, fontSize: 32, color: "#4a4a4a" }}>
+            Scan. Order. It’s cooking. Free to start.
           </div>
         </div>
-        <div style={{ display: "flex", fontSize: 26, color: "#a1a1aa" }}>
+        <div style={{ display: "flex", fontSize: 26, color: "#4a4a4a" }}>
           umami.com.ph · Made in the Philippines
         </div>
       </div>

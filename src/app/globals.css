@@ -1,184 +1,116 @@
 @import "tailwindcss";
 
+/*
+ * Umami — the restaurant-floor palette.
+ *
+ * White ground, black ink, the brand orange only on things you can press and on
+ * the one thing that is live. The kitchen screen is the single dark chapter,
+ * because the real kitchen display is dark. No gradients, glows, blurs, or
+ * shadows on things at rest: surfaces are separated by a tone step or by space.
+ */
 :root {
-  --background: #08080b;
-  --foreground: #f5f5f7;
-  --muted: #a1a1aa;
-  --border: rgba(255, 255, 255, 0.08);
-  --card: #0e0e12;
+  --background: #ffffff;
+  --paper: #f2f2ef;
+  --paper-2: #e7e6e1;
+  --foreground: #121212;
+  --muted: #4a4a4a;
   --brand: #e87a1e;
-  --brand-glow: rgba(232, 122, 30, 0.35);
-  --brand-soft: rgba(232, 122, 30, 0.12);
-  --grid: rgba(255, 255, 255, 0.04);
+  --brand-ink: #a9500a; /* orange that passes 4.5:1 on white, for text links */
+  --kitchen: #141414;
+  --kitchen-2: #222222;
+  --kitchen-ink: #f4f4f2;
+  --ok: #1f7a46;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
-  --color-border: var(--border);
-  --color-card: var(--card);
   --color-brand: var(--brand);
-  /* Body sans = Inter Tight. Display serif = Fraunces. Mono = JetBrains Mono. */
+  --color-brand-ink: var(--brand-ink);
+  --color-kitchen: var(--kitchen);
+  --color-kitchen-2: var(--kitchen-2);
+  --color-kitchen-ink: var(--kitchen-ink);
+  --color-ok: var(--ok);
   --font-sans: var(--font-inter-tight), -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
-  --font-display: var(--font-fraunces), "Fraunces", ui-serif, Georgia, serif;
-}
-
-* {
-  border-color: var(--border);
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
 }
 
 html {
   background: var(--background);
-  color-scheme: dark;
+  color-scheme: light;
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-inter-tight), -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-  font-weight: 400;
+  font-family: var(--font-sans);
+  font-size: 18px;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
-/* Display headlines use Fraunces — variable serif with character.
-   Weight 500 reads strong without feeling shouty. */
-h1, h2 {
-  font-family: var(--font-fraunces), "Fraunces", ui-serif, Georgia, serif;
+h1, h2, .display {
+  font-family: var(--font-display);
   font-weight: 500;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  line-height: 0.98;
+  text-wrap: balance;
 }
 
-::selection {
-  background: var(--brand);
-  color: #08080b;
+h3 { text-wrap: balance; }
+p { text-wrap: pretty; }
+
+::selection { background: var(--brand); color: #121212; }
+
+:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 3px;
 }
 
-.font-mono {
-  font-family: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+/* Dish photographs are cut-outs on white. Multiply drops the white so a dish
+   sits on the paper tone instead of in a white square. */
+.dish { mix-blend-mode: multiply; }
+
+/* Masked line rise: each headline line sits in a clipping box. */
+.line-mask { display: block; overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+
+/* The hero's load sequence runs in CSS, so it starts on the first frame and is
+   over within a second, with or without the page's script. */
+@keyframes rise-line { from { transform: translateY(105%); } to { transform: translateY(0); } }
+@keyframes rise-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+.rise-line { animation: rise-line 0.9s var(--ease-out) both; }
+.rise-in { animation: rise-in 0.8s var(--ease-out) both; }
+@media (prefers-reduced-motion: reduce) {
+  .rise-line, .rise-in { animation: none; }
 }
 
-/* Animated grid background */
-.grid-bg {
-  background-image:
-    linear-gradient(to right, var(--grid) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 80%);
-}
+/*
+ * Interface fragments. Everything inside [data-ui] is a true-size piece of the
+ * real Umami product, so it keeps the product's own conventions (small radii,
+ * 1px control borders, compact type). The page around it follows the page rules.
+ */
+[data-ui] { font-family: var(--font-sans); font-size: 14px; line-height: 1.4; }
+[data-ui].ui-row, [data-ui] .ui-row { border-bottom: 1px solid rgba(0, 0, 0, 0.08); }
+[data-ui].ui-dark .ui-row,
+[data-ui] .ui-dark .ui-row { border-bottom-color: rgba(255, 255, 255, 0.08); }
+[data-ui].ui-card, [data-ui] .ui-card { border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 12px; background: #fff; }
+[data-ui].ui-ticket, [data-ui] .ui-ticket { border-radius: 10px; background: var(--kitchen-2); }
+[data-ui] .ui-switch { width: 40px; height: 24px; border-radius: 999px; position: relative; transition: background-color 180ms ease; }
+[data-ui] .ui-switch > span { position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 999px; background: #fff; transition: transform 240ms var(--ease-out); }
+[data-ui] .ui-switch[aria-checked="true"] > span { transform: translateX(16px); }
+[data-ui] .ui-float { box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.35); }
 
-/* Glow blobs */
-.blob {
-  position: absolute;
-  border-radius: 9999px;
-  filter: blur(120px);
-  pointer-events: none;
-  opacity: 0.5;
-}
-
-/* Subtle scrollbar */
-::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.15); }
-
-/* Animations */
-@keyframes float-slow {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(30px, -50px) scale(1.05); }
-  66% { transform: translate(-20px, 30px) scale(0.95); }
-}
-.animate-float-slow {
-  animation: float-slow 18s ease-in-out infinite;
-}
-
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 0 0 var(--brand-glow); }
-  50% { box-shadow: 0 0 0 12px transparent; }
-}
-.animate-pulse-glow {
-  animation: pulse-glow 2.5s ease-in-out infinite;
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-.shimmer {
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-  background-size: 200% 100%;
-  animation: shimmer 3s linear infinite;
-}
-
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.animate-marquee {
-  animation: marquee 30s linear infinite;
-}
-
-/* Card hover lift */
-.lift {
-  transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s, border-color .35s;
-}
-.lift:hover {
-  transform: translateY(-4px);
-  border-color: rgba(232, 122, 30, 0.35);
-  box-shadow: 0 20px 60px -20px var(--brand-glow);
-}
-
-/* Gradient text */
-.gradient-text {
-  background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* Brand-text spans get an italic tilt — Fraunces' italic is gorgeous and
-   gives the headline rhythm a chef's-handwritten-note feel. */
-.brand-text {
-  background: linear-gradient(135deg, #ffb066 0%, #e87a1e 50%, #c25510 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  font-style: italic;
-  font-weight: 400;
-}
-
-/* Phone & laptop frame */
-.phone-frame {
-  background: linear-gradient(145deg, #1a1a1f, #0a0a0e);
-  border-radius: 42px;
-  padding: 12px;
-  box-shadow:
-    0 0 0 2px rgba(255,255,255,0.06),
-    0 30px 80px -20px rgba(0,0,0,0.8),
-    0 0 120px -20px var(--brand-glow);
-}
-
-.laptop-frame {
-  background: linear-gradient(145deg, #1a1a1f, #0a0a0e);
-  border-radius: 16px 16px 4px 4px;
-  padding: 10px 10px 26px;
-  box-shadow:
-    0 0 0 2px rgba(255,255,255,0.06),
-    0 30px 80px -20px rgba(0,0,0,0.8),
-    0 0 120px -20px var(--brand-glow);
-  position: relative;
-}
-.laptop-frame::after {
-  content: '';
-  position: absolute;
-  bottom: 4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 4px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 2px;
-}
+/* The live dot: flat, still. It means "connected", not "look at me". */
+.live-dot { display: inline-block; width: 8px; height: 8px; border-radius: 999px; background: var(--brand); }

@@ -1,32 +1,25 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter_Tight, JetBrains_Mono } from "next/font/google";
+import { Fraunces, Inter_Tight } from "next/font/google";
 import "./globals.css";
-import SmoothScroll from "@/components/SmoothScroll";
+import MotionRoot from "@/components/MotionRoot";
 import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "@/lib/site";
 
-// Display: Fraunces — variable serif with character (weight 400–700, italic)
+// Display: Fraunces. Headlines only, one weight, no italic.
 const fraunces = Fraunces({
   variable: "--font-fraunces",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
+  weight: ["500"],
   display: "swap",
 });
 
-// Body: Inter Tight — modern sans, slightly condensed, more character than Inter
+// Text: Inter Tight.
 const interTight = Inter_Tight({
   variable: "--font-inter-tight",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
-// Mono: JetBrains Mono — eyebrows, labels, technical accents
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
-  subsets: ["latin"],
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: SITE_TITLE,
@@ -61,18 +54,22 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${interTight.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${fraunces.variable} ${interTight.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground">
-        <SmoothScroll />
-        {children}
+      <body className="min-h-full bg-background text-foreground">
+        {/* Without script, entrance animations would leave content at their start
+            state; show everything in place instead. */}
+        <noscript>
+          <style>{"[data-reveal]{opacity:1!important;transform:none!important}"}</style>
+        </noscript>
+        <MotionRoot>{children}</MotionRoot>
         {/*
           Support chat bubble. Deliberately a one-line include of a script SERVED BY
           THE APP rather than a component in this repo: the widget and the endpoints
           it talks to live together in UmamiTech/Umami, so they can never drift out
           of step, and improving it never needs a redeploy here.
 
-          It self-mounts into a shadow root, so it cannot inherit or leak any of this
+          It self-mounts in an isolated DOM tree, so it cannot inherit or leak any of this
           site's styling. If the app has no Telegram bridge configured, the script is
           served as a harmless no-op instead of 404ing.
 
