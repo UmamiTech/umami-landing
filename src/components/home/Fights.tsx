@@ -2,7 +2,7 @@ import Image from "next/image";
 import Container from "../ui/Container";
 import Headline from "../ui/Headline";
 import Reveal from "../ui/Reveal";
-import { DISH_SOURCE } from "@/lib/dishes";
+import { KALEI } from "@/lib/dishes";
 
 const FIGHTS = [
   { problem: "The internet drops mid-service.", answer: "Umami keeps taking orders. Nobody at the table notices." },
@@ -23,17 +23,17 @@ export default function Fights() {
               <Headline lines={["Nightly fights,", "settled."]} className="text-[40px] md:text-[72px] lg:text-[64px]" />
               <Reveal from="scale" className="mt-12">
                 <figure>
-                  <div className="relative aspect-square overflow-hidden rounded-[24px] bg-white">
+                  <div className="relative aspect-square overflow-hidden rounded-[24px] bg-white p-6">
                     <Image
-                      src="/photos/barkada-set.webp"
-                      alt="A Barkada Set for four laid out on a grill table: meats, rice, sides and sauces."
+                      src="/photos/tenderloin-steak.webp"
+                      alt="Tenderloin steak with truffle mashed potato, pepper gravy and vegetables."
                       fill
                       sizes="(min-width: 1024px) 480px, 100vw"
-                      className="object-cover"
+                      className="object-contain p-6"
                     />
                   </div>
                   <figcaption className="mt-3 text-[14px] text-muted">
-                    Barkada Set for four, from the {DISH_SOURCE} menu.
+                    Tenderloin Steak with Truffle Mashed Potato, from the {KALEI} menu.
                   </figcaption>
                 </figure>
               </Reveal>

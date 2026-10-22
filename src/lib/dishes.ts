@@ -1,25 +1,43 @@
 /**
- * Real dishes from a real Umami restaurant: Romantic Baboy, Light Mall.
- * Names, prices and photographs are taken from that store's menu on
- * app.umami.com.ph (October 2026). Photos are the restaurant's own menu
- * photographs and are credited wherever they appear.
+ * Real dishes from real Umami restaurants, chosen to read as any restaurant's
+ * menu rather than one cuisine: Kalei Cafe Bar (café, pizza, pasta, Filipino
+ * breakfast) and Romantic Baboy (Korean). Names, prices and photographs are
+ * taken from their menus on app.umami.com.ph (October 2026); the photos are the
+ * restaurants' own menu photographs and each dish is credited to its restaurant
+ * wherever it appears.
  */
-export type Dish = { id: string; name: string; price: number; photo: string };
+export type Dish = { id: string; name: string; price: number; photo: string; source: string };
 
-export const DISH_SOURCE = "Romantic Baboy, Light Mall";
+export const KALEI = "Kalei Cafe Bar";
+export const BABOY = "Romantic Baboy";
+export const DISH_SOURCES = `${KALEI} and ${BABOY}`;
+
+const dish = (id: string, name: string, price: number, source: string): Dish => ({
+  id,
+  name,
+  price,
+  source,
+  photo: `/photos/${id}.webp`,
+});
 
 export const MENU_DISHES: Dish[] = [
-  { id: "cheesy-samgyup-bowl", name: "Cheesy Samgyup Bowl", price: 210, photo: "/photos/cheesy-samgyup-bowl.webp" },
-  { id: "bibimbap", name: "Bibimbap", price: 300, photo: "/photos/bibimbap.webp" },
-  { id: "crispy-kimbap", name: "Crispy Kimbap, 16 rolls", price: 499, photo: "/photos/crispy-kimbap.webp" },
-  { id: "beef-bone-soup", name: "Beef Bone Soup", price: 350, photo: "/photos/beef-bone-soup.webp" },
-  { id: "bulgogi-fried-rice", name: "Bulgogi Fried Rice", price: 250, photo: "/photos/bulgogi-fried-rice.webp" },
-  { id: "cheesy-chicken-poppers", name: "Cheesy Chicken Poppers", price: 179, photo: "/photos/cheesy-chicken-poppers.webp" },
-  { id: "mango-frappe", name: "Mango Frappe", price: 150, photo: "/photos/mango-frappe.webp" },
-  { id: "blue-lemonade", name: "Blue Lemonade, pitcher", price: 199, photo: "/photos/blue-lemonade.webp" },
+  dish("classic-tapa", "Classic Tapa Special", 390, KALEI),
+  dish("margherita-pizza", "Margherita Pizza", 460, KALEI),
+  dish("bibimbap", "Bibimbap", 300, BABOY),
+  dish("chicken-pesto", "Chicken Pesto", 410, KALEI),
+  dish("clubhouse", "Clubhouse Sandwich", 270, KALEI),
+  dish("cheesy-samgyup-bowl", "Cheesy Samgyup Bowl", 210, BABOY),
+  dish("strawberry-waffle", "Strawberry Waffle", 240, KALEI),
+  dish("mango-frappe", "Mango Frappe", 150, BABOY),
 ];
 
-export const dishById = (id: string) => MENU_DISHES.find((d) => d.id === id)!;
+/** Dishes used elsewhere on the page that are not in the tap-to-order grid. */
+const OTHER_DISHES: Dish[] = [
+  dish("caesar-salad", "Chicken Caesar Salad", 280, KALEI),
+  dish("cheesy-chicken-poppers", "Cheesy Chicken Poppers", 179, BABOY),
+];
+
+export const dishById = (id: string) => [...MENU_DISHES, ...OTHER_DISHES].find((d) => d.id === id)!;
 
 /**
  * Bill arithmetic, the way a Philippine restaurant bill reads: menu prices

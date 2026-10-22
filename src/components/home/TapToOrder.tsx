@@ -4,7 +4,7 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { useMemo, useState } from "react";
 import Container from "../ui/Container";
-import { DISH_SOURCE, MENU_DISHES, billFor, dishById, money } from "@/lib/dishes";
+import { DISH_SOURCES, MENU_DISHES, billFor, dishById, money } from "@/lib/dishes";
 
 /**
  * "Tap a dish": the guest's side of Umami, with a real menu. Tapping a dish adds
@@ -15,7 +15,7 @@ import { DISH_SOURCE, MENU_DISHES, billFor, dishById, money } from "@/lib/dishes
 const MAX_QTY = 9;
 
 export default function TapToOrder() {
-  const [cart, setCart] = useState<Record<string, number>>({ bibimbap: 1, "mango-frappe": 2 });
+  const [cart, setCart] = useState<Record<string, number>>({ "classic-tapa": 1, "mango-frappe": 2 });
   const [sent, setSent] = useState(false);
 
   const lines = useMemo(
@@ -43,7 +43,7 @@ export default function TapToOrder() {
           <h2 className="text-[40px] md:text-[72px]">Tap a dish. The bill keeps up.</h2>
           <p className="mt-8 max-w-xl text-[18px] leading-[1.5] text-muted md:text-[21px]">
             This is what your guests do at the table, with real dishes and prices from the{" "}
-            {DISH_SOURCE} menu. No app to download, no waiting for a server.
+            {DISH_SOURCES} menus. No app to download, no waiting for a server.
           </p>
         </div>
 
@@ -90,6 +90,7 @@ export default function TapToOrder() {
                         </AnimatePresence>
                       </span>
                       <span className="mt-3 block text-[16px] font-medium leading-snug">{d.name}</span>
+                      <span className="block text-[14px] text-muted">{d.source}</span>
                       <span className="mt-0.5 flex items-center justify-between text-[16px] text-muted tabular-nums">
                         {money(d.price)}
                         <span className="text-[16px] font-medium text-brand-ink opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">

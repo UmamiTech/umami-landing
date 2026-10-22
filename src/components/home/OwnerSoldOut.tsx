@@ -12,14 +12,14 @@ import { dishById, money } from "@/lib/dishes";
  * The owner's side: switch a dish off in the dashboard and it leaves every
  * guest's menu. Both panels here are true-size fragments of the real screens.
  */
-const IDS = ["beef-bone-soup", "bulgogi-fried-rice", "cheesy-chicken-poppers", "crispy-kimbap"];
+const IDS = ["chicken-pesto", "clubhouse", "cheesy-chicken-poppers", "caesar-salad"];
 
 export default function OwnerSoldOut() {
   const [on, setOn] = useState<Record<string, boolean>>({
-    "beef-bone-soup": true,
-    "bulgogi-fried-rice": true,
+    "chicken-pesto": true,
+    "clubhouse": true,
     "cheesy-chicken-poppers": false,
-    "crispy-kimbap": true,
+    "caesar-salad": true,
   });
   const dishes = IDS.map(dishById);
 

@@ -14,7 +14,7 @@ import { billFor, dishById, money } from "@/lib/dishes";
  * the steps scroll through it; on a phone the steps simply stack.
  */
 const ORDER = [
-  { ...dishById("cheesy-samgyup-bowl"), qty: 1 },
+  { ...dishById("margherita-pizza"), qty: 1 },
   { ...dishById("bibimbap"), qty: 1 },
   { ...dishById("mango-frappe"), qty: 2 },
 ];
@@ -43,7 +43,7 @@ function GuestScreen() {
   return (
     <div data-ui className="ui-card w-full max-w-[380px] overflow-hidden">
       <div className="ui-row px-5 py-4">
-        <div className="text-[13px] text-[#6b6b6b]">Romantic Baboy · Table 7</div>
+        <div className="text-[13px] text-[#6b6b6b]">Table 7</div>
         <div className="text-[17px] font-semibold">Your order</div>
       </div>
       <ul className="px-5 py-2">
@@ -78,7 +78,7 @@ function KitchenScreen() {
           <span className="rounded-md bg-white/12 px-2 py-0.5 text-[13px] font-medium">Cooking</span>
         </div>
         <ul className="mt-3 space-y-2 text-[15px]">
-          <li className="flex items-center justify-between"><span>1× Cheesy Samgyup Bowl</span><span className="text-[13px] text-[#7fd3a0]">Ready</span></li>
+          <li className="flex items-center justify-between"><span>1× Margherita Pizza</span><span className="text-[13px] text-[#7fd3a0]">Ready</span></li>
           <li className="flex items-center justify-between"><span>1× Bibimbap</span><span className="text-[13px] text-white/60">Cooking</span></li>
           <li className="flex items-center justify-between"><span>2× Mango Frappe</span><span className="text-[13px] text-[#7fd3a0]">Ready</span></li>
         </ul>

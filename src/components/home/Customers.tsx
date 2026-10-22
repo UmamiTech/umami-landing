@@ -7,7 +7,14 @@ import type { Customer } from "@/lib/customers";
  * lib/customers.ts). The app decides who appears; this only displays the list.
  * If the feed is down, the strip still names the restaurants we know are live.
  */
-const FALLBACK = ["Romantic Baboy", "Drunken Tiger Pub", "Nami Garden", "Seocho 1978"];
+const FALLBACK = ["Kalei Cafe Bar", "Romantic Baboy", "Drunken Tiger Pub", "Nami Garden", "Seocho 1978"];
+
+/**
+ * Kalei Cafe Bar takes orders on Umami inside Romantic Baboy, Ayala Malls The
+ * 30th, so the app's feed (one entry per restaurant) never lists it. It is named
+ * here so the strip shows the café alongside the grill.
+ */
+const KALEI_ENTRY = { name: "Kalei Cafe Bar" };
 
 export default function Customers({ customers }: { customers: Customer[] }) {
   return (
@@ -20,6 +27,14 @@ export default function Customers({ customers }: { customers: Customer[] }) {
           <Reveal className="lg:col-span-8">
             {customers.length > 0 ? (
               <ul className="flex flex-wrap items-center gap-x-10 gap-y-6">
+                <li>
+                  <span className="flex items-center gap-3">
+                    <span className="grid size-14 place-items-center rounded-[14px] bg-foreground font-display text-[24px] text-white" aria-hidden="true">
+                      K
+                    </span>
+                    <span className="text-[16px] font-medium">{KALEI_ENTRY.name}</span>
+                  </span>
+                </li>
                 {customers.map((c) => {
                   const body = (
                     <span className="flex items-center gap-3">

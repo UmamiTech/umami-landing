@@ -6,7 +6,7 @@ import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import Reveal from "@/components/ui/Reveal";
 import Image from "next/image";
-import { DISH_SOURCE, MENU_DISHES, money } from "@/lib/dishes";
+import { DISH_SOURCES, MENU_DISHES, money } from "@/lib/dishes";
 import { LANDING_PAGES, PROOF_LINKS, type LandingPageContent } from "@/lib/landingPages";
 import { SITE_URL, jsonLd } from "@/lib/site";
 import type { Metadata } from "next";
@@ -149,7 +149,7 @@ export default function LandingPage({ slug }: { slug: string }) {
                       ))}
                     </ul>
                     <figcaption className="mt-4 text-[14px] text-muted">
-                      Ordered from the table on Umami at {DISH_SOURCE}.
+                      Ordered from the table on Umami at {DISH_SOURCES}.
                     </figcaption>
                   </figure>
                 </Reveal>
