@@ -51,7 +51,7 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="relative scroll-mt-20 bg-paper py-24 md:py-36">
+    <section id="contact" data-chapter="black" className="chapter-black relative scroll-mt-20 py-24 md:py-36">
       <Container>
         <div className="grid gap-16 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-6">
@@ -76,7 +76,7 @@ export default function Contact() {
           </div>
 
           <div className="lg:col-span-5 lg:col-start-8">
-            <div className="rounded-[24px] bg-white p-7 md:p-9">
+            <div className="rounded-[24px] bg-white p-7 text-[#121212] md:p-9 [--foreground:#121212] [--muted:#4a4a4a]">
               <h3 className="text-[26px] font-semibold">Or leave a message</h3>
               <p className="mt-1 text-[16px] text-muted">Sean, the founder, reads every one.</p>
               {!sent ? (

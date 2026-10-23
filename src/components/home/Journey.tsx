@@ -163,7 +163,7 @@ export default function Journey() {
   const Screen = SCREENS[step];
 
   return (
-    <section id="how" className="relative scroll-mt-20 bg-paper pt-24 md:pt-36">
+    <section id="how" data-chapter="paper" className="chapter-paper relative scroll-mt-20 pt-24 md:pt-36">
       <Container>
         <div className="grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-10">
           <Headline lines={["One order.", "Four screens."]} className="text-[40px] md:text-[72px] lg:col-span-7" />

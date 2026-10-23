@@ -220,7 +220,7 @@ export default function Pricing() {
   const founding = useFoundingOffer();
 
   return (
-    <section id="pricing" className="relative scroll-mt-20 py-24 md:py-36">
+    <section id="pricing" data-chapter="white" className="chapter-white relative scroll-mt-20 py-24 md:py-36">
       <Container>
         <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-7">

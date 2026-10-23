@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Fraunces, Inter_Tight } from "next/font/google";
 import "./globals.css";
 import MotionRoot from "@/components/MotionRoot";
+import ChapterInk from "@/components/ChapterInk";
 import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "@/lib/site";
 
 // Display: Fraunces. Headlines only, one weight, no italic.
@@ -62,6 +63,7 @@ export default function RootLayout({
         <noscript>
           <style>{"[data-reveal]{opacity:1!important;transform:none!important}"}</style>
         </noscript>
+        <ChapterInk />
         <MotionRoot>{children}</MotionRoot>
         {/*
           Support chat bubble. Deliberately a one-line include of a script SERVED BY

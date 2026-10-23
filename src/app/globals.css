@@ -79,6 +79,40 @@ p { text-wrap: pretty; }
   outline-offset: 3px;
 }
 
+/*
+ * Colour chapters. A section carries data-chapter and one of these classes;
+ * the variables below make every text utility follow the ground. Hard cuts
+ * between chapters, never a gradient.
+ */
+.chapter-white { background: var(--background); }
+.chapter-paper { background: var(--paper); }
+.chapter-orange {
+  background: var(--brand);
+  color: #121212;
+  --foreground: #121212;
+  --muted: #3b2410;
+  --brand-ink: #121212;
+  --paper: #f3c89a;
+  --paper-2: #ebb87f;
+}
+.chapter-black {
+  background: var(--kitchen);
+  color: var(--kitchen-ink);
+  --foreground: #f4f4f2;
+  --muted: #b9b9b4;
+  --brand-ink: #f3a05a;
+  --paper: #2a2a2a;
+  --paper-2: #353535;
+}
+
+/* The header takes the chapter under it (set on <html> by ChapterInk). */
+.site-header { background: var(--background); color: var(--foreground); transition: background-color 200ms ease, color 200ms ease; }
+html[data-ink="paper"] .site-header { background: var(--paper); }
+html[data-ink="orange"] .site-header { background: var(--brand); color: #121212; --foreground: #121212; --brand-ink: #121212; }
+html[data-ink="black"] .site-header { background: var(--kitchen); color: var(--kitchen-ink); --foreground: #f4f4f2; --brand-ink: #f3a05a; }
+html[data-ink="orange"] .site-header .nav-cta { background: #121212; color: #ffffff; }
+html[data-ink="black"] .site-header .nav-cta { background: #ffffff; color: #121212; }
+
 /* Dish photographs are cut-outs on white. Multiply drops the white so a dish
    sits on the paper tone instead of in a white square. */
 .dish { mix-blend-mode: multiply; }

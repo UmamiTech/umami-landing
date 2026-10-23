@@ -75,7 +75,7 @@ export default function TryUmami({ showReel = true }: { showReel?: boolean }) {
   }
 
   return (
-    <section id="try" className="relative scroll-mt-20 bg-paper py-24 md:py-36">
+    <section id="try" data-chapter="paper" className="chapter-paper relative scroll-mt-20 py-24 md:py-36">
       <Container>
         <Headline lines={["Try it on", "your phone."]} className="text-[40px] md:text-[72px]" />
 

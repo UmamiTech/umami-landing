@@ -42,7 +42,7 @@ const cols = [
 
 export default function Footer() {
   return (
-    <footer className="bg-background">
+    <footer data-chapter="orange" className="chapter-orange">
       <Container className="pt-20 pb-10 md:pt-28">
         <div className="grid gap-12 md:grid-cols-4">
           <div>
@@ -68,7 +68,7 @@ export default function Footer() {
 
         <a href="/" aria-label="Umami home" className="mt-20 flex items-center gap-[2vw] md:mt-28">
           <BrandIcon className="size-[18vw] max-w-[180px] max-h-[180px]" />
-          <span className="text-[22vw] font-semibold leading-[0.8] tracking-[-0.05em] text-[#c75f0d] lg:text-[230px]">
+          <span className="text-[22vw] font-semibold leading-[0.8] tracking-[-0.05em] text-[#121212] lg:text-[230px]">
             umami
           </span>
         </a>

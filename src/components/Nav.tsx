@@ -29,8 +29,8 @@ export default function Nav() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 bg-background transition-[box-shadow] duration-200",
-        scrolled && "shadow-[0_1px_0_rgba(0,0,0,0.08)]", // taste-skill-ignore: the sticky bar is the one surface that floats
+        "site-header fixed inset-x-0 top-0 z-50",
+        scrolled && "shadow-[0_1px_0_rgba(0,0,0,0.06)]", // taste-skill-ignore: the sticky bar is the one surface that floats
       )}
     >
       <Container className="flex h-[72px] items-center justify-between gap-6">
@@ -49,7 +49,7 @@ export default function Nav() {
           <a href="https://app.umami.com.ph" className="hidden px-3 text-[16px] hover:text-brand-ink sm:inline">
             Sign in
           </a>
-          <Button href="#try" className="min-h-11 px-5">
+          <Button href="#try" className="nav-cta min-h-11 px-5">
             Try free
           </Button>
         </div>

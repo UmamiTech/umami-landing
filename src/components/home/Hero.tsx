@@ -9,7 +9,7 @@ import { DEMO_MENU_URL } from "@/lib/app";
 
 export default function Hero({ live, dishes }: { live: boolean; dishes: string[] }) {
   return (
-    <section className="relative pt-28 pb-20 md:pt-36 md:pb-28">
+    <section data-chapter="orange" className="chapter-orange relative pt-28 pb-20 md:pt-36 md:pb-28">
       <Container>
         <div className="grid items-stretch gap-12 lg:grid-cols-12 lg:gap-10">
           <div className="flex flex-col lg:col-span-6 lg:pr-6">
@@ -27,8 +27,8 @@ export default function Hero({ live, dishes }: { live: boolean; dishes: string[]
               gets the ticket, and your POS stays exactly where it is.
             </p>
             <div style={{ animationDelay: "0.4s" }} className="rise-in mt-10 flex flex-wrap gap-3">
-              <Button href="#try">Try free</Button>
-              <Button href="#pricing" variant="secondary">
+              <Button href="#try" variant="dark">Try free</Button>
+              <Button href="#pricing" className="bg-white text-foreground hover:bg-[#fff3e6]">
                 See pricing
               </Button>
             </div>
@@ -40,9 +40,9 @@ export default function Hero({ live, dishes }: { live: boolean; dishes: string[]
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Open the demo menu"
-                className="shrink-0 rounded-[14px] bg-paper p-3"
+                className="shrink-0 rounded-[14px] bg-white p-3"
               >
-                <QRCodeSVG value={DEMO_MENU_URL} size={112} level="M" bgColor="#f2f2ef" fgColor="#121212" />
+                <QRCodeSVG value={DEMO_MENU_URL} size={112} level="M" bgColor="#ffffff" fgColor="#121212" />
               </a>
               <p className="max-w-[19rem] text-[16px] leading-[1.45]">
                 <span className="font-semibold">Try it now.</span> Scan with your phone, order from the

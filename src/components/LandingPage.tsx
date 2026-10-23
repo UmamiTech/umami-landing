@@ -80,14 +80,14 @@ export default function LandingPage({ slug }: { slug: string }) {
       <Nav />
       <main>
         {/* Hero */}
-        <section className="relative pt-36 pb-16 md:pt-44 md:pb-24">
+        <section data-chapter="orange" className="chapter-orange relative pt-36 pb-16 md:pt-44 md:pb-24">
           <Container>
             <div className="max-w-4xl">
               <h1 className="text-[34px] sm:text-[48px] lg:text-[64px]">{p.h1}</h1>
               <p className="mt-8 max-w-2xl text-[19px] leading-[1.5] text-muted md:text-[21px]">{p.lede}</p>
               <div className="mt-10 flex flex-wrap gap-3">
-                <Button href="#try">Try free</Button>
-                <Button href="https://app.umami.com.ph/menu/demo" variant="secondary" external>
+                <Button href="#try" variant="dark">Try free</Button>
+                <Button href="https://app.umami.com.ph/menu/demo" className="bg-white text-foreground hover:bg-[#fff3e6]" external>
                   Order from the demo
                 </Button>
               </div>
@@ -96,7 +96,7 @@ export default function LandingPage({ slug }: { slug: string }) {
         </section>
 
         {/* Body */}
-        <section className="relative pb-24 md:pb-32">
+        <section data-chapter="white" className="chapter-white relative py-24 md:py-32">
           <Container>
             <div className="grid gap-16 lg:grid-cols-12 lg:gap-10">
               <div className="space-y-14 lg:col-span-7">

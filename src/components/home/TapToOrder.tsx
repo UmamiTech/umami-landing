@@ -37,7 +37,7 @@ export default function TapToOrder() {
   };
 
   return (
-    <section id="ordering" className="relative scroll-mt-20 py-24 md:py-36">
+    <section id="ordering" data-chapter="white" className="chapter-white relative scroll-mt-20 py-24 md:py-36">
       <Container>
         <div className="max-w-3xl">
           <h2 className="text-[40px] md:text-[72px]">Tap a dish. The bill keeps up.</h2>
