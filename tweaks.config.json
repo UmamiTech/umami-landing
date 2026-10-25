@@ -13,8 +13,118 @@
     "buttonPrimary": "[class*='min-h-12']:is([class*='bg-brand'],[class*='bg-foreground'])",
     "input": "input:not([type=checkbox]):not([type=radio]), select, textarea",
     "heading": "h1, h2, .display",
-    "nav": ".site-header"
+    "nav": ".site-header",
+    "container": "[class*='max-w-[1280px]']",
+    "link": "a[class*='underline']",
+    "image": "main img"
   },
+  "recommended": [
+    {
+      "name": "House style, tightened",
+      "why": "Today’s Umami look with headline tracking, leading and section spacing moved onto the house numbers. Nothing new, just sharper.",
+      "state": {
+        "displayTracking": -0.035,
+        "displayLeading": 0.95,
+        "bodySize": 18,
+        "bodyLeading": 1.5,
+        "cardShadow": "box-shadow: none;",
+        "cardBorder": "border: 0;",
+        "buttonShape": "border-radius: 999px;",
+        "sectionSpace": 160
+      }
+    },
+    {
+      "name": "Editorial menu",
+      "why": "A light menu-card serif at very tight tracking over Inter Tight, square buttons. Reads like a printed restaurant menu.",
+      "state": {
+        "displayFont": "Newsreader",
+        "displayWeight": 300,
+        "displayTracking": -0.05,
+        "displayLeading": 0.9,
+        "bodySize": 18,
+        "bodyLeading": 1.55,
+        "cardRadius": 0,
+        "cardShadow": "box-shadow: none;",
+        "cardBorder": "border: 0;",
+        "buttonShape": "border-radius: 0;",
+        "imageRadius": 0,
+        "linkStyle": "text-decoration-line: underline; text-decoration-thickness: 2px;"
+      }
+    },
+    {
+      "name": "Night service",
+      "why": "Dark like the kitchen screen the product shows, with one orange signal. Contrast stays above 9:1.",
+      "state": {
+        "displayFont": "Switzer",
+        "displayWeight": 600,
+        "displayTracking": -0.04,
+        "displayLeading": 0.95,
+        "background": "#121212",
+        "paper": "#1c1c1c",
+        "paper2": "#262626",
+        "foreground": "#f4f4f2",
+        "muted": "#b9b9b4",
+        "brandInk": "#f3a05a",
+        "kitchen": "#000000",
+        "cardRadius": 20,
+        "cardShadow": "box-shadow: none;",
+        "cardBorder": "border: 0;",
+        "buttonShape": "border-radius: 999px;"
+      }
+    },
+    {
+      "name": "Bold menu board",
+      "why": "Condensed capitals like a chalkboard menu, square buttons, punchier food photos.",
+      "state": {
+        "displayFont": "Anton",
+        "displayWeight": 400,
+        "displayTracking": -0.02,
+        "displayLeading": 0.86,
+        "bodyFont": "Work Sans",
+        "bodyLeading": 1.5,
+        "headingCase": "text-transform: uppercase;",
+        "cardRadius": 0,
+        "cardShadow": "box-shadow: none;",
+        "buttonShape": "border-radius: 0;",
+        "imageFilter": "filter: contrast(1.15) saturate(1.45);"
+      }
+    },
+    {
+      "name": "Swiss service",
+      "why": "One grotesk family, square geometry and generous spacing: the restraint premium SaaS sites use.",
+      "state": {
+        "displayFont": "General Sans",
+        "displayWeight": 700,
+        "displayTracking": -0.02,
+        "displayLeading": 0.9,
+        "bodyFont": "General Sans",
+        "bodyLeading": 1.5,
+        "cardRadius": 0,
+        "cardShadow": "box-shadow: none;",
+        "cardBorder": "border: 0;",
+        "buttonShape": "border-radius: 0;",
+        "sectionSpace": 200,
+        "contentWidth": 1200
+      }
+    },
+    {
+      "name": "Warm grotesk",
+      "why": "A friendly optical-size grotesk and big round shapes; the warmth comes from the food photos, not a cream page.",
+      "state": {
+        "displayFont": "Bricolage Grotesque",
+        "displayWeight": 600,
+        "displayTracking": -0.04,
+        "displayLeading": 0.92,
+        "bodyFont": "Bricolage Grotesque",
+        "bodyLeading": 1.5,
+        "cardRadius": 28,
+        "cardShadow": "box-shadow: none;",
+        "buttonShape": "border-radius: 999px;",
+        "imageRadius": 24,
+        "imageFilter": "filter: sepia(0.25) saturate(1.3) hue-rotate(-8deg);"
+      }
+    }
+  ],
   "groups": [
     {
       "title": "Type",
@@ -79,7 +189,8 @@
           "step": 0.5,
           "unit": "px",
           "selector": "body",
-          "prop": "font-size"
+          "prop": "font-size",
+          "role": "textSize"
         },
         {
           "id": "bodyLeading",
@@ -151,6 +262,399 @@
           "label": "Kitchen black",
           "type": "color",
           "var": "--kitchen"
+        }
+      ]
+    },
+    {
+      "title": "Shape & depth",
+      "open": false,
+      "knobs": [
+        {
+          "id": "cardRadius",
+          "label": "Card corners",
+          "type": "range",
+          "min": 0,
+          "max": 48,
+          "step": 1,
+          "unit": "px",
+          "target": "card",
+          "prop": "border-radius"
+        },
+        {
+          "id": "cardShadow",
+          "label": "Card shadow",
+          "type": "select",
+          "target": "card",
+          "prop": "*",
+          "options": [
+            {
+              "label": "None",
+              "value": "box-shadow: none;"
+            },
+            {
+              "label": "Soft",
+              "value": "box-shadow: 0 1px 2px rgb(0 0 0 / 0.06), 0 8px 24px -8px rgb(0 0 0 / 0.15);",
+              "flag": "resting shadows"
+            },
+            {
+              "label": "Medium",
+              "value": "box-shadow: 0 4px 6px -2px rgb(0 0 0 / 0.08), 0 20px 40px -12px rgb(0 0 0 / 0.25);",
+              "flag": "resting shadows"
+            },
+            {
+              "label": "Deep float",
+              "value": "box-shadow: 0 40px 80px -24px rgb(0 0 0 / 0.45);",
+              "flag": "resting shadows"
+            },
+            {
+              "label": "Hard offset",
+              "value": "box-shadow: 6px 6px 0 var(--foreground);"
+            },
+            {
+              "label": "Brand glow",
+              "value": "box-shadow: 0 0 0 1px color-mix(in srgb, var(--brand) 40%, transparent), 0 12px 40px -10px var(--brand);",
+              "flag": "glows"
+            }
+          ]
+        },
+        {
+          "id": "cardBorder",
+          "label": "Card outline",
+          "type": "select",
+          "target": "card",
+          "prop": "*",
+          "options": [
+            {
+              "label": "None",
+              "value": "border: 0;"
+            },
+            {
+              "label": "Hairline",
+              "value": "border: 1px solid rgb(0 0 0 / 0.1);",
+              "flag": "hairline rules"
+            },
+            {
+              "label": "Solid ink",
+              "value": "border: 2px solid var(--foreground);"
+            },
+            {
+              "label": "Thick ink",
+              "value": "border: 3px solid var(--foreground);"
+            },
+            {
+              "label": "Brand",
+              "value": "border: 2px solid var(--brand);"
+            },
+            {
+              "label": "Dashed",
+              "value": "border: 2px dashed var(--foreground);"
+            }
+          ]
+        },
+        {
+          "id": "cardPadding",
+          "label": "Card padding",
+          "type": "range",
+          "min": 8,
+          "max": 72,
+          "step": 2,
+          "unit": "px",
+          "target": "card",
+          "prop": "padding"
+        },
+        {
+          "id": "buttonShape",
+          "label": "Button shape",
+          "type": "select",
+          "target": "button",
+          "prop": "*",
+          "options": [
+            {
+              "label": "Pill",
+              "value": "border-radius: 999px;"
+            },
+            {
+              "label": "Rounded",
+              "value": "border-radius: 12px;",
+              "flag": "the soft 9–16px button radius"
+            },
+            {
+              "label": "Soft square",
+              "value": "border-radius: 6px;"
+            },
+            {
+              "label": "Square",
+              "value": "border-radius: 0;"
+            }
+          ]
+        },
+        {
+          "id": "buttonHeight",
+          "label": "Button height",
+          "type": "range",
+          "min": 32,
+          "max": 72,
+          "step": 2,
+          "unit": "px",
+          "target": "button",
+          "prop": "min-height"
+        },
+        {
+          "id": "buttonPadX",
+          "label": "Button width (padding)",
+          "type": "range",
+          "min": 8,
+          "max": 56,
+          "step": 2,
+          "unit": "px",
+          "target": "button",
+          "prop": "padding-inline"
+        },
+        {
+          "id": "buttonWeight",
+          "label": "Button text weight",
+          "type": "range",
+          "min": 300,
+          "max": 900,
+          "step": 100,
+          "target": "button",
+          "prop": "font-weight"
+        },
+        {
+          "id": "buttonCase",
+          "label": "Button text",
+          "type": "select",
+          "target": "button",
+          "prop": "*",
+          "options": [
+            {
+              "label": "Sentence",
+              "value": "text-transform: none; letter-spacing: normal;"
+            },
+            {
+              "label": "Uppercase tracked",
+              "value": "text-transform: uppercase; letter-spacing: 0.12em; font-size: 13px;",
+              "flag": "tiny tracked uppercase labels"
+            }
+          ]
+        },
+        {
+          "id": "inputRadius",
+          "label": "Input corners",
+          "type": "range",
+          "min": 0,
+          "max": 32,
+          "step": 1,
+          "unit": "px",
+          "target": "input",
+          "prop": "border-radius"
+        }
+      ]
+    },
+    {
+      "title": "Spacing & layout",
+      "open": false,
+      "knobs": [
+        {
+          "id": "sectionSpace",
+          "label": "Section spacing",
+          "type": "range",
+          "min": 24,
+          "max": 240,
+          "step": 4,
+          "unit": "px",
+          "target": "section",
+          "prop": "padding-block"
+        },
+        {
+          "id": "contentWidth",
+          "label": "Content width",
+          "type": "range",
+          "min": 720,
+          "max": 1600,
+          "step": 20,
+          "unit": "px",
+          "target": "container",
+          "prop": "max-width"
+        },
+        {
+          "id": "navStyle",
+          "label": "Header",
+          "type": "select",
+          "target": "nav",
+          "prop": "*",
+          "options": [
+            {
+              "label": "Solid",
+              "value": "backdrop-filter: none;"
+            },
+            {
+              "label": "Frosted",
+              "value": "background: color-mix(in srgb, var(--background) 70%, transparent) !important; backdrop-filter: blur(14px) saturate(160%); -webkit-backdrop-filter: blur(14px) saturate(160%);",
+              "flag": "glass panels"
+            },
+            {
+              "label": "Rule below",
+              "value": "border-bottom: 1px solid color-mix(in srgb, var(--foreground) 15%, transparent);"
+            },
+            {
+              "label": "Floating pill",
+              "value": "margin: 10px 16px 0; border-radius: 999px; box-shadow: 0 10px 30px -12px rgb(0 0 0 / 0.3);",
+              "flag": "pill navs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Headings & text",
+      "open": false,
+      "knobs": [
+        {
+          "id": "headingCase",
+          "label": "Heading case",
+          "type": "select",
+          "target": "heading",
+          "prop": "*",
+          "options": [
+            {
+              "label": "Sentence",
+              "value": "text-transform: none;"
+            },
+            {
+              "label": "UPPERCASE",
+              "value": "text-transform: uppercase;"
+            },
+            {
+              "label": "lowercase",
+              "value": "text-transform: lowercase;"
+            }
+          ]
+        },
+        {
+          "id": "headingColor",
+          "label": "Heading colour",
+          "type": "select",
+          "target": "heading",
+          "prop": "*",
+          "options": [
+            {
+              "label": "Ink",
+              "value": "color: var(--foreground);"
+            },
+            {
+              "label": "Brand",
+              "value": "color: var(--brand);"
+            },
+            {
+              "label": "Two-tone (brand underline)",
+              "value": "text-decoration: underline; text-decoration-color: var(--brand); text-decoration-thickness: 0.08em; text-underline-offset: 0.12em;"
+            },
+            {
+              "label": "Outline",
+              "value": "color: transparent; -webkit-text-stroke: 1.5px var(--foreground);"
+            }
+          ]
+        },
+        {
+          "id": "textAlign",
+          "label": "Section alignment",
+          "type": "select",
+          "target": "section",
+          "prop": "*",
+          "options": [
+            {
+              "label": "Left",
+              "value": "text-align: start;"
+            },
+            {
+              "label": "Centred",
+              "value": "text-align: center;"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Images & links",
+      "open": false,
+      "knobs": [
+        {
+          "id": "imageFilter",
+          "label": "Photo treatment",
+          "type": "select",
+          "target": "image",
+          "prop": "*",
+          "options": [
+            {
+              "label": "Natural",
+              "value": "filter: none;"
+            },
+            {
+              "label": "Black & white",
+              "value": "filter: grayscale(1);"
+            },
+            {
+              "label": "High contrast B&W",
+              "value": "filter: grayscale(1) contrast(1.35);"
+            },
+            {
+              "label": "Warm film",
+              "value": "filter: sepia(0.25) saturate(1.3) hue-rotate(-8deg);"
+            },
+            {
+              "label": "Vintage",
+              "value": "filter: sepia(0.6) contrast(1.05) saturate(0.9);"
+            },
+            {
+              "label": "Punchy",
+              "value": "filter: contrast(1.15) saturate(1.45);"
+            },
+            {
+              "label": "Faded",
+              "value": "filter: contrast(0.85) saturate(0.7) brightness(1.08);"
+            }
+          ]
+        },
+        {
+          "id": "imageRadius",
+          "label": "Photo corners",
+          "type": "range",
+          "min": 0,
+          "max": 48,
+          "step": 1,
+          "unit": "px",
+          "target": "image",
+          "prop": "border-radius"
+        },
+        {
+          "id": "linkStyle",
+          "label": "Links",
+          "type": "select",
+          "target": "link",
+          "prop": "*",
+          "options": [
+            {
+              "label": "Underline",
+              "value": "text-decoration-line: underline; text-decoration-thickness: 2px;"
+            },
+            {
+              "label": "Thin underline",
+              "value": "text-decoration-line: underline; text-decoration-thickness: 1px;"
+            },
+            {
+              "label": "No underline",
+              "value": "text-decoration-line: none;"
+            },
+            {
+              "label": "Highlighter",
+              "value": "text-decoration-line: none; background: linear-gradient(transparent 60%, color-mix(in srgb, var(--brand) 45%, transparent) 60%);"
+            },
+            {
+              "label": "Wavy",
+              "value": "text-decoration-line: underline; text-decoration-style: wavy; text-decoration-thickness: 1.5px;"
+            }
+          ]
         }
       ]
     }
