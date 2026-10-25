@@ -5,6 +5,16 @@
     "dir": "public/tweaks-fonts",
     "url": "/tweaks-fonts"
   },
+  "styleTargets": {
+    "body": "body",
+    "section": "section",
+    "card": ":is([class*='rounded-[16px]'],[class*='rounded-[20px]'],[class*='rounded-[24px]'],[class*='rounded-[28px]']):not(img):not([class*='bg-kitchen'])",
+    "button": "a[class*='min-h-12'], button[class*='min-h-12'], .nav-cta",
+    "buttonPrimary": "[class*='min-h-12']:is([class*='bg-brand'],[class*='bg-foreground'])",
+    "input": "input:not([type=checkbox]):not([type=radio]), select, textarea",
+    "heading": "h1, h2, .display",
+    "nav": ".site-header"
+  },
   "groups": [
     {
       "title": "Type",
