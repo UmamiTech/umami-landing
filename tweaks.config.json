@@ -1,6 +1,10 @@
 {
   "name": "Umami · Tweaks",
   "out": "src/app/tweaks.css",
+  "fonts": {
+    "dir": "public/tweaks-fonts",
+    "url": "/tweaks-fonts"
+  },
   "groups": [
     {
       "title": "Type",
