@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Fraunces, Inter_Tight } from "next/font/google";
 import "./globals.css";
+// Saved output of the Tweaks design panel. Imported after globals.css so it wins.
+import "./tweaks.css";
 import MotionRoot from "@/components/MotionRoot";
 import ChapterInk from "@/components/ChapterInk";
 import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "@/lib/site";
@@ -79,6 +81,15 @@ export default function RootLayout({
           nothing here to break on a Next upgrade.
         */}
         <script async src="https://app.umami.com.ph/api/support/public/widget.js" />
+        {/*
+          Tweaks: live design panel, dev only (`next build` drops this branch).
+          dev.bat starts its server, or `npm run tweaks` beside `npm run dev`.
+          Knobs live in tweaks.config.json; saves land in src/app/tweaks.css.
+          If the server isn't running the script 404s and nothing happens.
+        */}
+        {process.env.NODE_ENV === "development" && (
+          <script defer src="http://127.0.0.1:4791/tweaks.js" />
+        )}
       </body>
     </html>
   );

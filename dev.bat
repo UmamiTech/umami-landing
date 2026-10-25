@@ -52,6 +52,12 @@ echo   Press Ctrl+C to stop
 echo ============================================
 echo.
 
+REM ---- 3b. Tweaks design panel (only on a PC that has the craft skill) ----
+REM Opens in its own minimised window. On the page, press Alt+T or click "Tweaks".
+if exist "%USERPROFILE%\.claude\skills\craft\tweaks\server.mjs" start "Umami Tweaks" /min cmd /c npm run tweaks
+if exist "%USERPROFILE%\.claude\skills\craft\tweaks\server.mjs" echo   Tweaks panel: press Alt+T on the page
+echo.
+
 call npm run dev
 
 REM ---- 4. Pause on exit so user sees any errors ----

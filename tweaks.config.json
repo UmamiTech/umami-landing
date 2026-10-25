@@ -1,0 +1,144 @@
+{
+  "name": "Umami · Tweaks",
+  "out": "src/app/tweaks.css",
+  "groups": [
+    {
+      "title": "Type",
+      "typePairs": true,
+      "knobs": [
+        {
+          "id": "displayFont",
+          "role": "displayFont",
+          "label": "Display font",
+          "type": "font",
+          "var": "--font-fraunces",
+          "fallback": ""
+        },
+        {
+          "id": "displayWeight",
+          "role": "displayWeight",
+          "label": "Display weight",
+          "type": "range",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "selector": "h1, h2, .display",
+          "prop": "font-weight"
+        },
+        {
+          "id": "displayTracking",
+          "role": "displayTracking",
+          "label": "Display tracking",
+          "type": "range",
+          "min": -0.08,
+          "max": 0.04,
+          "step": 0.005,
+          "unit": "em",
+          "selector": "h1, h2, .display",
+          "prop": "letter-spacing"
+        },
+        {
+          "id": "displayLeading",
+          "role": "displayLeading",
+          "label": "Display leading",
+          "type": "range",
+          "min": 0.8,
+          "max": 1.4,
+          "step": 0.01,
+          "selector": "h1, h2, .display",
+          "prop": "line-height"
+        },
+        {
+          "id": "bodyFont",
+          "role": "textFont",
+          "label": "Body font",
+          "type": "font",
+          "var": "--font-inter-tight",
+          "fallback": ""
+        },
+        {
+          "id": "bodySize",
+          "label": "Body size",
+          "type": "range",
+          "min": 14,
+          "max": 24,
+          "step": 0.5,
+          "unit": "px",
+          "selector": "body",
+          "prop": "font-size"
+        },
+        {
+          "id": "bodyLeading",
+          "role": "textLeading",
+          "label": "Body leading",
+          "type": "range",
+          "min": 1.2,
+          "max": 1.9,
+          "step": 0.05,
+          "selector": "body",
+          "prop": "line-height"
+        }
+      ]
+    },
+    {
+      "title": "Colour",
+      "palette": {
+        "bg": "background",
+        "surface": "paper",
+        "ink": "foreground",
+        "muted": "muted",
+        "accent": "brand"
+      },
+      "knobs": [
+        {
+          "id": "brand",
+          "label": "Brand orange",
+          "type": "color",
+          "var": "--brand"
+        },
+        {
+          "id": "brandInk",
+          "label": "Brand ink (links on white)",
+          "type": "color",
+          "var": "--brand-ink"
+        },
+        {
+          "id": "foreground",
+          "label": "Ink",
+          "type": "color",
+          "var": "--foreground"
+        },
+        {
+          "id": "muted",
+          "label": "Muted ink",
+          "type": "color",
+          "var": "--muted"
+        },
+        {
+          "id": "background",
+          "label": "Page",
+          "type": "color",
+          "var": "--background"
+        },
+        {
+          "id": "paper",
+          "label": "Paper",
+          "type": "color",
+          "var": "--paper"
+        },
+        {
+          "id": "paper2",
+          "label": "Paper 2",
+          "type": "color",
+          "var": "--paper-2"
+        },
+        {
+          "id": "kitchen",
+          "label": "Kitchen black",
+          "type": "color",
+          "var": "--kitchen"
+        }
+      ]
+    }
+  ]
+}

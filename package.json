@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "tweaks": "node \"%USERPROFILE%/.claude/skills/craft/tweaks/server.mjs\" --config tweaks.config.json"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
