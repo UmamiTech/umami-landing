@@ -1,3 +1,46 @@
-/* tweaks-state {} */
+/* tweaks-state {"displayTracking":-0.035,"displayLeading":0.95,"bodySize":18,"bodyLeading":1.5,"cardShadow":"box-shadow: none;","cardBorder":"border: 0;","buttonShape":"border-radius: 999px;","sectionSpace":160,"__fx":["image-zoom","staggered-rise","damped-spring","squircle"]} */
 /* Written by the Tweaks panel (~/.claude/skills/craft/tweaks). Safe to edit by hand or delete.
    Rules are scoped to html:not([data-tweaks-live]) so the panel can preview over them. */
+/* effect: Image zoom */
+html:not([data-tweaks-live]) main img { transition: transform 600ms cubic-bezier(.16,1,.3,1); }
+html:not([data-tweaks-live]) main img:hover { transform: scale(1.05); }
+@media (prefers-reduced-motion: reduce) { html:not([data-tweaks-live]) main img { transition: none; } html:not([data-tweaks-live]) main img:hover { transform: none; } }
+/* effect: Staggered rise */
+@keyframes tweaks-stagger { from { transform: translateY(32px); opacity: 0; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-tweaks-live]) :is([class*='rounded-[16px]'],[class*='rounded-[20px]'],[class*='rounded-[24px]'],[class*='rounded-[28px]']):not(img):not([class*='bg-kitchen']) { animation: tweaks-stagger 700ms cubic-bezier(.16,1,.3,1) both; animation-timeline: view(); animation-range: entry 0% entry 50%; }
+  html:not([data-tweaks-live]) :is([class*='rounded-[16px]'],[class*='rounded-[20px]'],[class*='rounded-[24px]'],[class*='rounded-[28px]']):not(img):not([class*='bg-kitchen']):nth-child(2) { animation-range: entry 10% entry 60%; }
+  html:not([data-tweaks-live]) :is([class*='rounded-[16px]'],[class*='rounded-[20px]'],[class*='rounded-[24px]'],[class*='rounded-[28px]']):not(img):not([class*='bg-kitchen']):nth-child(3) { animation-range: entry 20% entry 70%; }
+  html:not([data-tweaks-live]) :is([class*='rounded-[16px]'],[class*='rounded-[20px]'],[class*='rounded-[24px]'],[class*='rounded-[28px]']):not(img):not([class*='bg-kitchen']):nth-child(n+4) { animation-range: entry 30% entry 80%; }
+}
+/* effect: Damped spring */
+html:not([data-tweaks-live]) :is([class*='rounded-[16px]'],[class*='rounded-[20px]'],[class*='rounded-[24px]'],[class*='rounded-[28px]']):not(img):not([class*='bg-kitchen']), html:not([data-tweaks-live]) a[class*='min-h-12'], html:not([data-tweaks-live]) button[class*='min-h-12'], html:not([data-tweaks-live]) .nav-cta { transition: transform 1.6s linear(0, 0.088, 0.311, 0.603, 0.899, 1.149, 1.321, 1.401, 1.397, 1.326, 1.215, 1.092, 0.98, 0.895, 0.846, 0.833, 0.852, 0.891, 0.941, 0.99, 1.03, 1.056, 1.068, 1.065, 1.052, 1.033, 1.013, 0.994, 0.981, 0.974, 0.972, 0.976, 0.983, 0.991, 0.999, 1.006, 1.01, 1.011, 1.011, 1.008, 1); }
+html:not([data-tweaks-live]) :is([class*='rounded-[16px]'],[class*='rounded-[20px]'],[class*='rounded-[24px]'],[class*='rounded-[28px]']):not(img):not([class*='bg-kitchen']):hover { transform: translateY(-6px); }
+html:not([data-tweaks-live]) a[class*='min-h-12']:hover, html:not([data-tweaks-live]) button[class*='min-h-12']:hover, html:not([data-tweaks-live]) .nav-cta:hover { transform: translateY(-3px); }
+@media (prefers-reduced-motion: reduce) { html:not([data-tweaks-live]) :is([class*='rounded-[16px]'],[class*='rounded-[20px]'],[class*='rounded-[24px]'],[class*='rounded-[28px]']):not(img):not([class*='bg-kitchen']), html:not([data-tweaks-live]) a[class*='min-h-12'], html:not([data-tweaks-live]) button[class*='min-h-12'], html:not([data-tweaks-live]) .nav-cta { transition: none; } html:not([data-tweaks-live]) :is([class*='rounded-[16px]'],[class*='rounded-[20px]'],[class*='rounded-[24px]'],[class*='rounded-[28px]']):not(img):not([class*='bg-kitchen']):hover, html:not([data-tweaks-live]) a[class*='min-h-12']:hover, html:not([data-tweaks-live]) button[class*='min-h-12']:hover, html:not([data-tweaks-live]) .nav-cta:hover { transform: none; } }
+/* effect: Squircle corners */
+@supports (corner-shape: squircle) {
+  html:not([data-tweaks-live]) :is([class*='rounded-[16px]'],[class*='rounded-[20px]'],[class*='rounded-[24px]'],[class*='rounded-[28px]']):not(img):not([class*='bg-kitchen']), html:not([data-tweaks-live]) a[class*='min-h-12'], html:not([data-tweaks-live]) button[class*='min-h-12'], html:not([data-tweaks-live]) .nav-cta, html:not([data-tweaks-live]) input:not([type=checkbox]):not([type=radio]), html:not([data-tweaks-live]) select, html:not([data-tweaks-live]) textarea, html:not([data-tweaks-live]) main img { corner-shape: squircle; }
+}
+html:not([data-tweaks-live]) h1,
+html:not([data-tweaks-live]) h2,
+html:not([data-tweaks-live]) .display {
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+}
+html:not([data-tweaks-live]) body {
+  font-size: 18px;
+  line-height: 1.5;
+}
+html:not([data-tweaks-live]) :is([class*='rounded-[16px]'],[class*='rounded-[20px]'],[class*='rounded-[24px]'],[class*='rounded-[28px]']):not(img):not([class*='bg-kitchen']) {
+  box-shadow: none;
+  border: 0;
+}
+html:not([data-tweaks-live]) a[class*='min-h-12'],
+html:not([data-tweaks-live]) button[class*='min-h-12'],
+html:not([data-tweaks-live]) .nav-cta {
+  border-radius: 999px;
+}
+html:not([data-tweaks-live]) section {
+  padding-block: 160px;
+}
