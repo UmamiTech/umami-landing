@@ -10,7 +10,7 @@ import { motion, type HTMLMotionProps } from "framer-motion";
 type Props = HTMLMotionProps<"div"> & { delay?: number; from?: "rise" | "scale" | "fade" };
 
 const START = {
-  rise: { opacity: 0, y: 24 },
+  rise: { opacity: 0, y: 20 },
   scale: { opacity: 0, scale: 1.06 },
   fade: { opacity: 0 },
 };
@@ -22,7 +22,7 @@ export default function Reveal({ children, delay = 0, from = "rise", ...rest }: 
       initial={START[from]}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: "0px 0px -12% 0px" }}
-      transition={{ duration: from === "scale" ? 1.1 : 0.8, delay, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: from === "scale" ? 0.8 : 0.6, delay, ease: [0.16, 1, 0.3, 1] }}
       {...rest}
     >
       {children}

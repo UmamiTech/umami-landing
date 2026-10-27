@@ -25,12 +25,18 @@ export default function ChapterInk() {
       const chapter = current.dataset.chapter || "white";
       if (root.dataset.ink !== chapter) root.dataset.ink = chapter;
     };
+    // At most once a frame: scroll fires faster than the screen can show.
+    let frame = 0;
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(() => { frame = 0; pick(); });
+    };
     pick();
-    window.addEventListener("scroll", pick, { passive: true });
-    window.addEventListener("resize", pick);
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
     return () => {
-      window.removeEventListener("scroll", pick);
-      window.removeEventListener("resize", pick);
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
       delete root.dataset.ink;
     };
   }, []);

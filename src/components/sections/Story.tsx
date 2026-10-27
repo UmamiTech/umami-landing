@@ -13,7 +13,7 @@ const beats = [
 
 export default function Story() {
   return (
-    <section id="story" data-chapter="white" className="chapter-white relative scroll-mt-20 py-24 md:py-36">
+    <section id="story" data-chapter="white" className="chapter-white relative scroll-mt-20 py-24 md:py-40">
       <Container>
         <div className="grid gap-16 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-6">

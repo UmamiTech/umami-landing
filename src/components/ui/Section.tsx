@@ -27,7 +27,7 @@ export default function Section({
     <section
       id={id}
       className={cn(
-        "relative scroll-mt-20 py-24 md:py-36",
+        "relative scroll-mt-20 py-24 md:py-40",
         tone === "paper" && "bg-paper",
         className,
       )}

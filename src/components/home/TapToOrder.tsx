@@ -37,7 +37,7 @@ export default function TapToOrder() {
   };
 
   return (
-    <section id="ordering" data-chapter="white" className="chapter-white relative scroll-mt-20 py-24 md:py-36">
+    <section id="ordering" data-chapter="white" className="chapter-white relative scroll-mt-20 py-24 md:py-40">
       <Container>
         <div className="max-w-3xl">
           <h2 className="text-[40px] md:text-[72px]">Tap a dish. The bill keeps up.</h2>
@@ -58,7 +58,7 @@ export default function TapToOrder() {
                   initial={{ opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "0px 0px -12% 0px" }}
-                  transition={{ duration: 0.8, delay: (i % 4) * 0.07, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 0.6, delay: (i % 4) * 0.06, ease: [0.16, 1, 0.3, 1] }}
                 >
                     <button
                       type="button"
@@ -72,7 +72,7 @@ export default function TapToOrder() {
                           alt=""
                           fill
                           sizes="(min-width: 1024px) 200px, 45vw"
-                          className="dish object-contain transition-transform duration-300 ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.04] group-active:scale-[0.98]"
+                          className="dish object-contain transition-transform duration-300 ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.04] group-active:scale-[0.97] group-active:duration-75"
                         />
                         <AnimatePresence>
                           {qty > 0 && (
@@ -126,7 +126,7 @@ export default function TapToOrder() {
                             type="button"
                             onClick={() => remove(l.id)}
                             aria-label={`Remove one ${l.name}`}
-                            className="grid size-7 place-items-center rounded-md border border-black/15 text-[16px] leading-none hover:bg-black/5"
+                            className="relative grid size-7 place-items-center rounded-md border border-black/15 text-[16px] leading-none transition-[background-color,scale] duration-150 hover:bg-black/5 active:scale-90 active:duration-75 after:absolute after:-inset-2 after:content-['']"
                           >
                             −
                           </button>
@@ -135,7 +135,7 @@ export default function TapToOrder() {
                             type="button"
                             onClick={() => add(l.id)}
                             aria-label={`Add one ${l.name}`}
-                            className="grid size-7 place-items-center rounded-md border border-black/15 text-[16px] leading-none hover:bg-black/5"
+                            className="relative grid size-7 place-items-center rounded-md border border-black/15 text-[16px] leading-none transition-[background-color,scale] duration-150 hover:bg-black/5 active:scale-90 active:duration-75 after:absolute after:-inset-2 after:content-['']"
                           >
                             +
                           </button>
@@ -173,7 +173,7 @@ export default function TapToOrder() {
                   type="button"
                   disabled={lines.length === 0}
                   onClick={() => setSent(true)}
-                  className="h-12 w-full rounded-full bg-brand font-semibold text-foreground transition-colors hover:bg-[#f08a32] disabled:opacity-50"
+                  className="h-12 w-full rounded-full bg-brand font-semibold text-foreground transition-[background-color,scale] duration-150 ease-out hover:bg-[#f08a32] active:scale-[0.97] active:duration-75 disabled:opacity-50 disabled:active:scale-100"
                 >
                   {sent ? "Sent to the kitchen" : "Send to kitchen"}
                 </button>

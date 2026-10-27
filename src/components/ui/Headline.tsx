@@ -57,7 +57,7 @@ export default function Headline({
                 hidden: { y: "105%" },
                 shown: {
                   y: "0%",
-                  transition: { duration: 0.9, delay: delay + i * 0.1, ease: [0.16, 1, 0.3, 1] },
+                  transition: { duration: 0.7, delay: delay + i * 0.08, ease: [0.16, 1, 0.3, 1] },
                 },
               }}
             >

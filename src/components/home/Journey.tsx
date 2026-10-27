@@ -155,15 +155,19 @@ const SCREENS = [GuestScreen, KitchenScreen, FloorScreen, CashierScreen];
 
 export default function Journey() {
   const stage = useRef<HTMLDivElement>(null);
-  const [step, setStep] = useState(0);
+  // dir is +1 scrolling down the night, -1 scrolling back up it. A screen leaves
+  // the way the scroll is going and the next arrives from the other side, so
+  // going back plays the same path in reverse.
+  const [[step, dir], setStep] = useState<[number, number]>([0, 1]);
   const { scrollYProgress } = useScroll({ target: stage, offset: ["start start", "end end"] });
   useMotionValueEvent(scrollYProgress, "change", (v) => {
-    setStep(Math.min(3, Math.max(0, Math.floor(v * 4))));
+    const next = Math.min(3, Math.max(0, Math.floor(v * 4)));
+    setStep((cur) => (next === cur[0] ? cur : [next, next > cur[0] ? 1 : -1]));
   });
   const Screen = SCREENS[step];
 
   return (
-    <section id="how" data-chapter="paper" className="chapter-paper relative scroll-mt-20 pt-24 md:pt-36">
+    <section id="how" data-chapter="paper" className="chapter-paper relative scroll-mt-20 pt-24 md:pt-40">
       <Container>
         <div className="grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-10">
           <Headline lines={["One order.", "Four screens."]} className="text-[40px] md:text-[72px] lg:col-span-7" />
@@ -192,14 +196,22 @@ export default function Journey() {
                   </li>
                 ))}
               </ol>
-              <div className="col-span-6 flex min-h-[460px] flex-col items-center justify-center">
-                <AnimatePresence mode="wait">
+              <div className="relative col-span-6 flex min-h-[460px] flex-col items-center justify-center">
+                {/* popLayout: the next screen starts at once instead of waiting for
+                    the last one to finish leaving, so a fast scroll is never blocked. */}
+                <AnimatePresence mode="popLayout" initial={false} custom={dir}>
                   <motion.div
                     key={step}
-                    initial={{ opacity: 0, y: 24 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -16, transition: { duration: 0.25 } }}
-                    transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                    custom={dir}
+                    variants={{
+                      enter: (d: number) => ({ opacity: 0, y: 24 * d }),
+                      shown: { opacity: 1, y: 0 },
+                      leave: (d: number) => ({ opacity: 0, y: -16 * d, transition: { duration: 0.2 } }),
+                    }}
+                    initial="enter"
+                    animate="shown"
+                    exit="leave"
+                    transition={{ type: "spring", bounce: 0, duration: 0.45 }}
                     className="flex w-full justify-center"
                   >
                     <Screen />
@@ -213,7 +225,7 @@ export default function Journey() {
       </div>
 
       {/* Phones and tablets: the same four steps, stacked. */}
-      <Container className="pb-24 pt-14 md:pb-36 lg:hidden">
+      <Container className="pb-24 pt-14 md:pb-40 lg:hidden">
         <ol className="space-y-20">
           {STEPS.map((s, i) => {
             const S = SCREENS[i];

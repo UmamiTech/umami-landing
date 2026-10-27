@@ -31,7 +31,9 @@ export default function Button({
 }) {
   const cls = cn(
     "inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 text-[16px] font-medium",
-    "transition-colors duration-200 active:translate-y-px disabled:opacity-60",
+    // Feedback lands on the press, not the release: a quick, small scale-down that
+    // never bounces. Colour fades on hover; nothing lifts.
+    "transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] active:duration-75 disabled:opacity-60 disabled:active:scale-100",
     styles[variant],
     className,
   );

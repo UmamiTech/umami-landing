@@ -51,7 +51,7 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" data-chapter="black" className="chapter-black relative scroll-mt-20 py-24 md:py-36">
+    <section id="contact" data-chapter="black" className="chapter-black relative scroll-mt-20 py-24 md:py-40">
       <Container>
         <div className="grid gap-16 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-6">

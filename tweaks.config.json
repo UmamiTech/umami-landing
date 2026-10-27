@@ -21,12 +21,8 @@
   "recommended": [
     {
       "name": "House style, tightened",
-      "why": "Today’s Umami look with headline tracking, leading and section spacing moved onto the house numbers. Nothing new, just sharper.",
+      "why": "Today’s Umami look. Headline tracking and leading (size-aware), body size (rem) and section spacing (phone vs desktop) live in globals.css and the components, because one blanket value is wrong at some size.",
       "state": {
-        "displayTracking": -0.035,
-        "displayLeading": 0.95,
-        "bodySize": 18,
-        "bodyLeading": 1.5,
         "cardShadow": "box-shadow: none;",
         "cardBorder": "border: 0;",
         "buttonShape": "border-radius: 999px;",

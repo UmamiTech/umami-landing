@@ -15,7 +15,7 @@ const FIGHTS = [
 
 export default function Fights() {
   return (
-    <section id="why" data-chapter="orange" className="chapter-orange relative scroll-mt-20 py-24 md:py-36">
+    <section id="why" data-chapter="orange" className="chapter-orange relative scroll-mt-20 py-24 md:py-40">
       <Container>
         <div className="grid gap-14 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-5">

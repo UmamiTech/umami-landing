@@ -1,6 +1,6 @@
 "use client";
 
-import { animate, useInView } from "framer-motion";
+import { animate, motion, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import Container from "../ui/Container";
 import Headline from "../ui/Headline";
@@ -170,28 +170,31 @@ function useFoundingOffer(): FoundingState | null {
 function RollingNumber({ value }: { value: number }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "0px 0px -12% 0px" });
-  const [shown, setShown] = useState(value);
-  const armed = useRef(false);
+  const [shown, setShownState] = useState(value);
+  // The number on screen right now. Every roll starts from it, so switching
+  // Monthly/Yearly mid-roll carries on from where the figure is instead of
+  // restarting from zero.
+  const current = useRef(value);
+  const setShown = (v: number) => {
+    current.current = v;
+    setShownState(v);
+  };
   useEffect(() => {
     const el = ref.current;
     if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    if (el.getBoundingClientRect().top > window.innerHeight) {
-      armed.current = true;
-      setShown(0);
-    }
+    // Below the fold on load: start at zero so it counts up once on arrival.
+    if (el.getBoundingClientRect().top > window.innerHeight) setShown(0);
   }, []);
   useEffect(() => {
     if (!inView) return;
-    if (!armed.current) {
-      setShown(value);
-      return;
-    }
+    const from = current.current;
+    if (from === value) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setShown(value);
       return;
     }
-    const controls = animate(0, value, {
-      duration: 1.2,
+    const controls = animate(from, value, {
+      duration: from === 0 ? 1 : 0.45,
       ease: [0.16, 1, 0.3, 1],
       onUpdate: (v) => setShown(Math.round(v)),
     });
@@ -220,7 +223,7 @@ export default function Pricing() {
   const founding = useFoundingOffer();
 
   return (
-    <section id="pricing" data-chapter="white" className="chapter-white relative scroll-mt-20 py-24 md:py-36">
+    <section id="pricing" data-chapter="white" className="chapter-white relative scroll-mt-20 py-24 md:py-40">
       <Container>
         <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-7">
@@ -257,11 +260,21 @@ export default function Pricing() {
                 aria-pressed={annual === o.v}
                 onClick={() => setAnnual(o.v)}
                 className={cn(
-                  "min-h-11 rounded-full px-5 text-[16px] font-medium transition-colors duration-200",
-                  annual === o.v ? "bg-foreground text-white" : "text-foreground hover:bg-paper-2",
+                  "relative min-h-11 rounded-full px-5 text-[16px] font-medium transition-[color,background-color] duration-200",
+                  annual === o.v ? "text-white" : "text-foreground hover:bg-paper-2",
                 )}
               >
-                {o.label}
+                {/* One pill that slides to the chosen period, so the choice moves
+                    rather than blinking from one side to the other. */}
+                {annual === o.v && (
+                  <motion.span
+                    layoutId="billing-period"
+                    className="absolute inset-0 rounded-full bg-foreground"
+                    transition={{ type: "spring", bounce: 0, duration: 0.35 }}
+                    aria-hidden="true"
+                  />
+                )}
+                <span className="relative">{o.label}</span>
               </button>
             ))}
           </div>
