@@ -20,14 +20,14 @@ import { getDemoInfo } from "@/lib/demo";
 export const revalidate = 3600;
 
 export default async function Home() {
-  const [customers, demo] = await Promise.all([getCustomers(), getDemoInfo()]);
+  const [feed, demo] = await Promise.all([getCustomers(), getDemoInfo()]);
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(SITE_JSON_LD)} />
       <Nav />
       <main>
         <Hero live={demo.live} dishes={demo.dishes} />
-        <Customers customers={customers} />
+        <Customers customers={feed.customers} orders={feed.orders} />
         <TapToOrder />
         <Journey />
         <OwnerSoldOut />

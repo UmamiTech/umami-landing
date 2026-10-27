@@ -1,6 +1,6 @@
 import Container from "../ui/Container";
 import Reveal from "../ui/Reveal";
-import type { Customer } from "@/lib/customers";
+import type { Customer, OrderTotals } from "@/lib/customers";
 
 /**
  * Restaurants taking orders on Umami right now, read live from the app (see
@@ -16,14 +16,29 @@ const FALLBACK = ["Kalei Cafe Bar", "Romantic Baboy", "Drunken Tiger Pub", "Nami
  */
 const KALEI_ENTRY = { name: "Kalei Cafe Bar" };
 
-export default function Customers({ customers }: { customers: Customer[] }) {
+/**
+ * Below this the line stays hidden, so a stalled feed or an empty test database
+ * never prints a small number as if it were the platform's.
+ */
+const MIN_ORDERS_TO_SHOW = 1000;
+
+export default function Customers({ customers, orders }: { customers: Customer[]; orders: OrderTotals | null }) {
   return (
     <section data-chapter="black" className="chapter-black py-14 md:py-16" aria-labelledby="customers-title">
       <Container>
         <div className="grid items-center gap-8 lg:grid-cols-12">
-          <h2 id="customers-title" className="text-[36px] lg:col-span-4">
-            In these kitchens tonight.
-          </h2>
+          <div className="lg:col-span-4">
+            <h2 id="customers-title" className="text-[36px]">
+              In these kitchens tonight.
+            </h2>
+            {orders && orders.last30Days >= MIN_ORDERS_TO_SHOW && (
+              <p className="mt-3 text-[18px] leading-[1.45]">
+                <span className="font-semibold tabular-nums">{orders.last30Days.toLocaleString("en-US")}</span>{" "}
+                orders in the last 30 days,{" "}
+                <span className="tabular-nums">{orders.allTime.toLocaleString("en-US")}</span> in all.
+              </p>
+            )}
+          </div>
           <Reveal className="lg:col-span-8">
             {customers.length > 0 ? (
               <ul className="flex flex-wrap items-center gap-x-10 gap-y-6">
