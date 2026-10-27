@@ -120,7 +120,7 @@ export default function FoodCheck({
                     : "bg-[#f7f7f5] border border-black/10 hover:bg-[#efefec]"
                 }`}
               >
-                <span aria-hidden="true">{tile.emoji}</span>
+                {tile.emoji}
               </button>
             );
           })}

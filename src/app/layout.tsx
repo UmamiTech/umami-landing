@@ -80,6 +80,8 @@ export default function RootLayout({
           Plain <script> rather than next/script on purpose — no framework API, so
           nothing here to break on a Next upgrade.
         */}
+        {/* The hero's live kitchen screen, the trial form and the chat bubble all talk to the app. */}
+        <link rel="preconnect" href="https://app.umami.com.ph" />
         <script async src="https://app.umami.com.ph/api/support/public/widget.js" />
         {/*
           Tweaks: live design panel, dev only (`next build` drops this branch).
