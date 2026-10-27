@@ -42,6 +42,7 @@ export function landingMetadata(slug: string): Metadata {
 const RELATED = [
   { slug: "what-is-umami", label: "What is Umami" },
   { slug: "qr-ordering", label: "QR code ordering" },
+  { slug: "kitchen-display-system", label: "Kitchen display system" },
   { slug: "works-with-your-pos", label: "Works with your POS" },
   { slug: "for-samgyupsal", label: "For unlimited samgyupsal" },
   { slug: "for-cafes", label: "For cafés" },

@@ -524,6 +524,59 @@ export const LANDING_PAGES: Record<string, LandingPageContent> = {
       },
     ],
   },
+
+  "kitchen-display-system": {
+    slug: "kitchen-display-system",
+    title: "Kitchen Display System for Restaurants in PH | Umami",
+    description:
+      "A kitchen display system that runs on any tablet or TV you own. Orders arrive by table with every add-on and note. Free with QR ordering for PH restaurants.",
+    eyebrow: "Kitchen display system",
+    h1: "A kitchen display system on the screen you already have.",
+    lede: "Every order lands on the kitchen screen the moment it is placed, by table, with every add-on and note. No printed tickets to lose, no shouting across the pass.",
+    sections: [
+      {
+        heading: "Orders arrive the second they are placed",
+        body: [
+          "Whether a guest orders from the QR code on the table or your staff take the order, it goes to the same kitchen queue. Each ticket shows the table number, the time it came in, every item with its choices and add-ons, and any note the guest or server typed.",
+          "A sound plays when new orders arrive, so the cooks hear them over a busy line. Nothing plays when a screen first opens or reconnects, so the alert always means something new.",
+        ],
+      },
+      {
+        heading: "The kitchen moves it, the floor sees it",
+        body: [
+          "Cooks tap a ticket from new to cooking to ready. Your dining staff see on their own screen which dishes are ready to serve and at which table, and the cashier sees the running bill for every table, so nobody has to walk to the kitchen to ask.",
+        ],
+      },
+      {
+        heading: "Each station sees only its own dishes",
+        body: [
+          "The grill does not need to see the drinks. Each staff member picks which menu categories their screen shows, and the choice stays with their account, so a bar screen and a hot kitchen screen can run side by side.",
+        ],
+      },
+      {
+        heading: "No hardware to buy",
+        body: [
+          "The kitchen screen runs in the browser. Use a tablet, a laptop, or a TV with any small computer plugged in. If a screen breaks mid-service, open the kitchen screen on another device and carry on.",
+        ],
+        bullets: [
+          "Included in every plan, Starter (free) included",
+          "Works alongside your POS; keep it for receipts and BIR",
+          "Keeps taking orders when the internet drops (Pro plan)",
+        ],
+      },
+    ],
+    faqs: [
+      ...COMMON_FAQS,
+      {
+        q: "Do I need a special kitchen display screen?",
+        a: "No. Any tablet, laptop or TV with a browser works. Many kitchens start with a spare tablet on the wall.",
+      },
+      {
+        q: "Can I still print kitchen tickets?",
+        a: "Not from Umami. The kitchen screen replaces paper tickets, so there is nothing to print, lose or misread.",
+      },
+    ],
+  },
 };
 
 export const LANDING_SLUGS = Object.keys(LANDING_PAGES);

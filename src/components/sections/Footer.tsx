@@ -14,6 +14,7 @@ const cols = [
     links: [
       { label: "What is Umami", href: "/what-is-umami" },
       { label: "QR code ordering", href: "/qr-ordering" },
+      { label: "Kitchen display system", href: "/kitchen-display-system" },
       { label: "Works with your POS", href: "/works-with-your-pos" },
       { label: "For unlimited samgyupsal", href: "/for-samgyupsal" },
       { label: "For cafés", href: "/for-cafes" },
