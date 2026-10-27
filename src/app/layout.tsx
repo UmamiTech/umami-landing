@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Fraunces, Inter_Tight } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 // Saved output of the Tweaks design panel. Imported after globals.css so it wins.
 import "./tweaks.css";
@@ -67,6 +68,9 @@ export default function RootLayout({
         </noscript>
         <ChapterInk />
         <MotionRoot>{children}</MotionRoot>
+        {/* Page views, sources and countries, cookieless. Switched on in the Vercel
+            dashboard (Project > Analytics); until then it sends nothing. */}
+        <Analytics />
         {/*
           Support chat bubble. Deliberately a one-line include of a script SERVED BY
           THE APP rather than a component in this repo: the widget and the endpoints

@@ -12,10 +12,11 @@ Allow: /
 # blocking them would remove this site from search entirely. Google-Extended is
 # Google's separate AI-training agent; blocking it does not affect search ranking.
 #
-# Note this includes the RETRIEVAL crawlers (OAI-SearchBot, ChatGPT-User,
-# PerplexityBot, Claude-SearchBot), which are what let a page be cited in an AI
-# answer. Remove those four lines to become citable again without allowing
-# training.
+# RETRIEVAL crawlers OAI-SearchBot, ChatGPT-User, Claude-SearchBot and
+# PerplexityBot are ALLOWED (owner decision, 2026-10-27): they are what let a page
+# be read and cited in an AI answer, and blocking them meant ChatGPT could not read
+# the site at all. Training crawlers stay blocked. Claude-User and Perplexity-User
+# are still blocked pending the owner's call.
 
 # EXCEPTION (owner decision, 2026-09-21): every AI agent below may read ONE file,
 # /llms.txt — a short, plain summary of what Umami is. It says what we want an AI
@@ -89,24 +90,20 @@ Disallow: /
 
 # — Retrieval (answering a live question; blocking these costs AI citations) —
 User-agent: OAI-SearchBot
-Allow: /llms.txt
-Disallow: /
+Allow: /
 
 User-agent: ChatGPT-User
-Allow: /llms.txt
-Disallow: /
+Allow: /
 
 User-agent: Claude-SearchBot
-Allow: /llms.txt
-Disallow: /
+Allow: /
 
 User-agent: Claude-User
 Allow: /llms.txt
 Disallow: /
 
 User-agent: PerplexityBot
-Allow: /llms.txt
-Disallow: /
+Allow: /
 
 User-agent: Perplexity-User
 Allow: /llms.txt
